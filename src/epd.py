@@ -1,3 +1,14 @@
+#import epd2in13
+
+# Interfaces to be implemented for mock
+# init()
+# reset() ?
+# sleep() ?
+# set_frame_memory(image, x, y)
+# clear_frame_memory(color) # color is 1-byte, 1 bit per pixel, e.g., 0xFF (8 bits white)
+# display_frame()
+
+
 ##
  # there are 2 memory areas embedded in the e-paper display
  # and once the display is refreshed, the memory area will be auto-toggled,
@@ -49,6 +60,14 @@ class EPD:
         self.epd.display_frame()
         self.epd.set_frame_memory(self.image_white, 0, 0)
         self.epd.display_frame()
+#       self.epd.clear_frame_memory(0x00)
+#       self.epd.display_frame()
+#       self.epd.clear_frame_memory(0x00)
+#       self.epd.display_frame()
+#       self.epd.clear_frame_memory(0xFF)
+#       self.epd.display_frame()
+#       self.epd.clear_frame_memory(0xFF)
+##       self.epd.display_frame()
     
     def clear(self, deep=False):
         if deep == True:
