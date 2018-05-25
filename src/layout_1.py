@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 from PIL import ImageFont
-from epd import EPD_MOCKUP
+from epd import EPD
 from component import Component, Separator
 
 icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chancetstorms':u'','clear':u'','flurries':u'','fog':u'','hazy':u'','mostlycloudy':u'','mostlysunny':u'','partlycloudy':u'','partlysunny':u'','sleet':u'','rain':u'','sunny':u'','tstorms':u'','cloudy':u''}
@@ -52,8 +52,7 @@ class Layout_1:
         self.elec    = 12.3
 
         # E-Paper Display instance
-#        self.epd = EPD()
-        self.epd = EPD_MOCKUP(122, 250)
+        self.epd = EPD(False)
         self.epd.refresh()
 #        self.epd.clear(deep=True)
 
