@@ -52,9 +52,9 @@ class Layout_1:
         self.elec    = 12.3
 
         # E-Paper Display instance
-        self.epd = EPD(False)
+        self.epd = EPD(True)
         self.epd.refresh()
-#        self.epd.clear(deep=True)
+#        self.epd.clear()
 
         # Build the layout
         self.c1   = Component(80, self.ch1, 13, bg_color=0)
@@ -107,7 +107,7 @@ class Layout_1:
         self.separator4 = Separator(self.width, self.sh1, bg_color=255)
         self.separator4.set_position(0, self.sep_4_y)
 
-        self.c9   = Component(122, 6, 6, bg_color=0)
+        self.c9   = Component(128, 6, 6, bg_color=0)
         self.c9.set_position(0, self.row_4_y)
 
         self.c10   = Component(128, 18, 16)
@@ -134,7 +134,8 @@ class Layout_1:
         self.epd.add([self.c7, self.c8, self.separator4, self.c9, self.c10, self.c11, self.c12, self.c13])
 
         # TODO: Add update_all() to epd
-        self.epd.update(at_once)
+#        self.epd.update(at_once)
+        self.epd.show()
 
     def inc_water(self, increase):
         self.water += increase
@@ -162,19 +163,20 @@ if __name__ == '__main__':
     for i in range(10):
         L1.inc_water(1)
         L1.inc_gas(0.01)
-        L1.epd.update(at_once)
-#        L1.epd.update_all()
+        L1.epd.update_1b1()
+#        L1.epd.update(at_once)
 
     L1.epd.refresh()
+#    L1.epd.clear()
     L1.clear_all()
 
     for i in range(10):
         L1.inc_water(1)
         L1.inc_gas(0.01)
         L1.epd.update(at_once)
-#        L1.epd.update_all()
-        
+#        L1.epd.update_1b1()
+
     raw_input()
-    
+
 #    for k,v in icons_list.iteritems():
 #        print k, hex(ord(v)) #, unichr(ord(v))

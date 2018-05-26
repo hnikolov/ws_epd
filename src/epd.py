@@ -1,8 +1,9 @@
-#import epd2in13
+import epd2in13
 
 import time
-import Tkinter
-from PIL import Image, ImageTk, ImageOps
+#import Tkinter
+#from PIL import ImageTk
+from PIL import Image, ImageOps
 
 def button_click_exit_mainloop (event):
     event.widget.quit() # this will cause mainloop() to unblock.
@@ -89,63 +90,50 @@ class EPD:
         else:
             self.components.append( component )
 
-            
+    def show(self):
+        for c in self.components:
+            self.image_frame.paste(c.image, (c.x, c.y))
+            self.invalid = False
+
+        self.epd.set_frame_memory(self.image_frame, 0, 0)
+        self.epd.display_frame()
+        self.epd.set_frame_memory(self.image_frame, 0, 0)
+
     def refresh(self):
-        for c in self.components:                                                                                    
-            self.image_frame.paste(c.image.rotate(c.rot), (c.x, c.y))                                                                                      
-        
+        for c in self.components:
+            self.image_frame.paste(c.image.rotate(c.rot), (c.x, c.y))
+
         self.image_invrt = self.image_frame.convert('L')
         self.image_invrt = ImageOps.invert(self.image_invrt)
         self.image_invrt = self.image_invrt.convert('1')
-        
+
         self.epd.set_frame_memory(self.image_invrt, 0, 0)
         self.epd.display_frame()
 
         self.epd.set_frame_memory(self.image_frame, 0, 0)
         self.epd.display_frame()
+        self.epd.set_frame_memory(self.image_frame, 0, 0)
 
 
-    def update(self, at_once=None): # TODO: at_once                                                 
-#        for c in self.components:                                          
-#            if c.invalid == True:                                          
-#                self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y) 
-#        self.epd.display_frame()                                           
-        for c in self.components:                                          
-            if c.invalid == True:                                          
-                self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y) 
-                self.invalid = False                                       
+    def update(self, at_once=None): # TODO: at_once
+#        for c in self.components:
+#            if c.invalid == True:
+#                self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
+#        self.epd.display_frame()
+        for c in self.components:
+            if c.invalid == True:
+#                self.epd.set_frame_memory(c.image, c.x, c.y)
+                self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
+                self.invalid = False
         self.epd.display_frame()
-     
-    # TODO     
-    def clear_all(self):
-        self.epd.set_frame_memory(self.image_black, 0, 0)
-        self.epd.display_frame()
+
+    # TODO
+    def clear(self):
         self.epd.set_frame_memory(self.image_white, 0, 0)
         self.epd.display_frame()
-#       self.epd.clear_frame_memory(0x00)
-#       self.epd.display_frame()
-#       self.epd.clear_frame_memory(0x00)
-#       self.epd.display_frame()
-#       self.epd.clear_frame_memory(0xFF)
-#       self.epd.display_frame()
-#       self.epd.clear_frame_memory(0xFF)
-##       self.epd.display_frame()
-    
-    # TODO
-    def clear(self, deep=False):
-        if deep == True:
-            self.epd.init(self.epd.lut_full_update)
-# TODO
-#            self.epd.clear_frame_memory(0xFF)
-#            self.epd.set_frame_memory(self.clear_white, 0, 0)
-#            self.epd.display_frame()
-#            self.epd.init(self.epd.lut_partial_update)
-#        else:
-            self.epd.set_frame_memory(self.clear_white, 0, 0)
-            self.epd.display_frame()
-            self.epd.set_frame_memory(self.clear_white, 0, 0)
-            self.epd.display_frame()
-            self.epd.init(self.epd.lut_partial_update)
+        self.epd.set_frame_memory(self.image_white, 0, 0)
+#        self.epd.display_frame()
+
 
     # TODO: works but to be removed
     def update_component(self, c):
