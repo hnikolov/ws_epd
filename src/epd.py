@@ -1,8 +1,4 @@
-#import epd2in13
-
 import time
-import Tkinter
-from PIL import ImageTk
 from PIL import Image, ImageOps
 
 def button_click_exit_mainloop (event):
@@ -67,6 +63,7 @@ class EPD:
     """
     def __init__(self, Waveshare = True):
         if Waveshare == True:
+            import epd2in13
             self.epd = epd2in13.EPD()
             self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
             self.image_white = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)
@@ -74,6 +71,8 @@ class EPD:
             self.image_frame = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)  # 255: clear the frame
             self.image_invrt = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT),   0)
         else:
+            import Tkinter
+            from PIL import ImageTk
             self.epd = EPD_2in13_MOCK()
             self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
             self.image_white = Image.new('1', (128, 250), 255)
@@ -121,14 +120,10 @@ class EPD:
         self.epd.set_frame_memory(self.image_white, 0, 0)
         self.epd.display_frame()
         self.epd.set_frame_memory(self.image_white, 0, 0)
-#        self.epd.display_frame()
 
 
     def update(self):
-#        for c in self.components:
-#            if c.invalid == True:
-#                self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
-#        self.epd.display_frame()
+        # No need to set the 2 frame memories, initially done by show()
         for c in self.components:
             if c.invalid == True:
 #                self.epd.set_frame_memory(c.image, c.x, c.y)
@@ -149,4 +144,3 @@ class EPD:
         self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
         self.epd.display_frame()
         self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
-#        self.epd.display_frame()

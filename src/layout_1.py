@@ -52,7 +52,7 @@ class Layout_1:
         self.elec    = 12.3
 
         # E-Paper Display instance
-        self.epd = EPD(False)
+        self.epd = EPD(True)
         self.epd.refresh()
 #        self.epd.clear()
 
