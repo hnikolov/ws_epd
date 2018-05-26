@@ -30,13 +30,13 @@ at_once = True
 
 class Layout_1:
     def __init__(self):
-        self.width   = 128 # epd2in13.EPD_WIDTH-6
+        self.width   = 128 # epd2in13.EPD_WIDTH
         self.height  = 250 # epd2in13.EPD_HEIGHT
         self.ch1     =  15 # component height 1
         self.ch2     =  26 # component height 2
         self.sh1     =   3 # separator height 1
 
-        # row_1 and sep_1 not used
+        # Offsets
         self.sep_1_y = self.ch1 # after (date and time)
         self.row_1_y = self.sep_1_y + self.sh1
         self.sep_2_y = self.row_1_y + self.ch2
@@ -52,7 +52,7 @@ class Layout_1:
         self.elec    = 12.3
 
         # E-Paper Display instance
-        self.epd = EPD(True)
+        self.epd = EPD(False)
         self.epd.refresh()
 #        self.epd.clear()
 
@@ -133,8 +133,7 @@ class Layout_1:
         self.epd.add([self.c3, self.c4, self.separator2, self.c5, self.c6, self.separator3])
         self.epd.add([self.c7, self.c8, self.separator4, self.c9, self.c10, self.c11, self.c12, self.c13])
 
-        # TODO: Add update_all() to epd
-#        self.epd.update(at_once)
+#        self.epd.update()
         self.epd.show()
 
     def inc_water(self, increase):
@@ -152,8 +151,7 @@ class Layout_1:
         self.gas = 0
         self.c6.clear()
         self.c6.set_text(str(self.gas) + " m3")
-        # TODO: Add update_all to epd
-        self.epd.update(at_once)
+        self.epd.update()
 
 
 if __name__ == '__main__':
@@ -164,7 +162,7 @@ if __name__ == '__main__':
         L1.inc_water(1)
         L1.inc_gas(0.01)
         L1.epd.update_1b1()
-#        L1.epd.update(at_once)
+#        L1.epd.update()
 
     L1.epd.refresh()
 #    L1.epd.clear()
@@ -173,7 +171,7 @@ if __name__ == '__main__':
     for i in range(10):
         L1.inc_water(1)
         L1.inc_gas(0.01)
-        L1.epd.update(at_once)
+        L1.epd.update()
 #        L1.epd.update_1b1()
 
     raw_input()

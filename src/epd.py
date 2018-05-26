@@ -1,8 +1,8 @@
-import epd2in13
+#import epd2in13
 
 import time
-#import Tkinter
-#from PIL import ImageTk
+import Tkinter
+from PIL import ImageTk
 from PIL import Image, ImageOps
 
 def button_click_exit_mainloop (event):
@@ -10,30 +10,30 @@ def button_click_exit_mainloop (event):
 
 class EPD_2in13_MOCK:
     def __init__(self):
-        
+
         self.w = 122 # Usable resolution
         self.h = 250
-        
+
         self.lut_partial_update = []
         self.lut_full_update    = []
-        
+
         self.image = Image.new('1', (self.w, self.h), 255)
-        
+
         # The mock-up part
         self.root = Tkinter.Tk()
         self.root.bind("<Button>", button_click_exit_mainloop) # unblock mainloop()
-        self.root.geometry('%dx%d' % (self.w, self.h))        
+        self.root.geometry('%dx%d' % (self.w, self.h))
         self.tkpi        = ImageTk.PhotoImage(self.image)
         self.label_image = Tkinter.Label(self.root, image=self.tkpi)
 
     def init(self, dummy_lut):
         pass
 
-        
+
     def set_frame_memory(self, image, x, y):
         self.image.paste(image, (x, y))
 
-        
+    # TODO: Not clear how this function works on the real display and how to be used
     def clear_frame_memory(self, color):
         """ color is 1-byte, 1 bit per pixel, e.g., 0xFF (8 bits white)
             Currently supported color: 0x00 and 0xFF
@@ -43,16 +43,16 @@ class EPD_2in13_MOCK:
             return
         self.image = Image.new('1', (self.w, self.h), color)
 
-        
+
     def display_frame(self):
         self.tkpi        = ImageTk.PhotoImage(self.image)
         self.label_image = Tkinter.Label(self.root, image=self.tkpi)
         self.label_image.place(x=0,y=0,width=self.image.size[0],height=self.image.size[1])
-        
+
         self.root.update()
         time.sleep(0.5)
 
-        
+
 ##
  # there are 2 memory areas embedded in the e-paper display
  # and once the display is refreshed, the memory area will be auto-toggled,
@@ -70,14 +70,14 @@ class EPD:
             self.epd = epd2in13.EPD()
             self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
             self.image_white = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)
-            self.image_black = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT),   0)  
+            self.image_black = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT),   0)
             self.image_frame = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)  # 255: clear the frame
             self.image_invrt = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT),   0)
         else:
             self.epd = EPD_2in13_MOCK()
             self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
             self.image_white = Image.new('1', (128, 250), 255)
-            self.image_black = Image.new('1', (128, 250),   0)  
+            self.image_black = Image.new('1', (128, 250),   0)
             self.image_frame = Image.new('1', (128, 250), 255)  # 255: clear the frame
             self.image_invrt = Image.new('1', (128, 250),   0)
 
@@ -90,14 +90,16 @@ class EPD:
         else:
             self.components.append( component )
 
+
     def show(self):
         for c in self.components:
             self.image_frame.paste(c.image, (c.x, c.y))
-            self.invalid = False
+            c.invalid = False
 
         self.epd.set_frame_memory(self.image_frame, 0, 0)
         self.epd.display_frame()
         self.epd.set_frame_memory(self.image_frame, 0, 0)
+
 
     def refresh(self):
         for c in self.components:
@@ -115,7 +117,14 @@ class EPD:
         self.epd.set_frame_memory(self.image_frame, 0, 0)
 
 
-    def update(self, at_once=None): # TODO: at_once
+    def clear(self):
+        self.epd.set_frame_memory(self.image_white, 0, 0)
+        self.epd.display_frame()
+        self.epd.set_frame_memory(self.image_white, 0, 0)
+#        self.epd.display_frame()
+
+
+    def update(self):
 #        for c in self.components:
 #            if c.invalid == True:
 #                self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
@@ -124,30 +133,20 @@ class EPD:
             if c.invalid == True:
 #                self.epd.set_frame_memory(c.image, c.x, c.y)
                 self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
-                self.invalid = False
+                c.invalid = False
         self.epd.display_frame()
-
-    # TODO
-    def clear(self):
-        self.epd.set_frame_memory(self.image_white, 0, 0)
-        self.epd.display_frame()
-        self.epd.set_frame_memory(self.image_white, 0, 0)
-#        self.epd.display_frame()
 
 
     # TODO: works but to be removed
-    def update_component(self, c):
-        # TODO: Do we need to call rotate 2 times?
-        self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
-        self.epd.display_frame()
-        self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
-#        self.epd.display_frame()
-        c.invalid = False
-
-    # TODO: works but to be removed
-    def update_1b1(self, at_once=None):
-        # TODO: Can we set the frame first (all components) and then display?
-        # TODO: Prepare an image with the whole layout. e.g., for complete epd update
+    def update_1b1(self):
         for c in self.components:
             if c.invalid == True:
                 self.update_component(c)
+                c.invalid = False
+
+    # TODO: works but to be removed
+    def update_component(self, c):
+        self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
+        self.epd.display_frame()
+        self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
+#        self.epd.display_frame()
