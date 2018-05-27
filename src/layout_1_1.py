@@ -30,7 +30,7 @@ class Layout_1:
         self.elec    = 12.3
 
         # E-Paper Display instance
-        self.epd = EPD(False)
+        self.epd = EPD(True)
         self.epd.refresh()
 #        self.epd.clear()
 
@@ -53,7 +53,7 @@ class Layout_1:
 
         self.c4   = Component(56, self.ch2, 18)
         self.c4.set_position(32, self.row_1_y)
-        self.c4.set_text(str(self.water), 2)
+        self.c4.set_text(str(self.water))
 
         self.u1   = Component(40, self.ch2, 16)
         self.u1.set_position(88, self.row_1_y)
@@ -86,7 +86,7 @@ class Layout_1:
         self.u3   = Component(40, self.ch2, 16)
         self.u3.set_position(88, self.row_3_y)
         self.u3.set_text("kWh", 0, align=0)
-        
+
         self.separator4 = Separator(self.width, self.sh1, bg_color=255)
         self.separator4.set_position(0, self.sep_4_y)
 
@@ -100,8 +100,8 @@ class Layout_1:
         self.u4   = Component(40, self.ch2, 16)
         self.u4.set_position(88, self.row_4_y)
         self.u4.set_text("kWh", 0, align=0)
-    # --------------------------------------------------
-        
+        # --------------------------------------------------
+
         self.separator5 = Separator(self.width, 3, 3, bg_color=0)
         self.separator5.set_position(0, self.sep_5_y)
 
