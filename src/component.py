@@ -40,11 +40,12 @@ class Component(object):
         self.y         = 0 #
         self.rot       = 0 # Rotate the image when set in the frame memory (0, 90, 180, 270)
         # -------------------------------------------------------------------------------------
+        
+        self.image = Image.new('1', (width, height), bg_color)
         if image != None:
-            self.image = Image.open(image)
-            self.image = self.image.resize((26,26), Image.ANTIALIAS)
-        else:
-            self.image = Image.new('1', (width, height), bg_color)
+            im = Image.open(image)
+            im = im.resize((self.w,self.w), Image.ANTIALIAS)
+            self.image.paste(im, ((width-self.w)/2, (self.h-self.w)/2))
 
         self.draw      = ImageDraw.Draw(self.image)
         self.font      = ImageFont.truetype('fonts/arial.ttf', font_size)
