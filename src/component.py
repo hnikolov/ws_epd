@@ -52,7 +52,8 @@ class Component(object):
 #            self.image.paste(im, ((width-self.w)/2, (self.h-self.w)/2))
 
         self.draw      = ImageDraw.Draw(self.image)
-        self.font      = ImageFont.truetype('fonts/arial.ttf', font_size)
+        self.font      = ImageFont.truetype(font, font_size)
+#        self.font      = ImageFont.truetype('fonts/arial.ttf', font_size)
 #        self.font      = ImageFont.truetype('fonts/weathericons-regular-webfont.ttf', font_size)
         self.aleft     = 0
         self.acenter   = 1

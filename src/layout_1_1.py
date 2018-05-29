@@ -4,6 +4,34 @@ from PIL import ImageFont
 from epd import EPD
 from component import Component, Separator
 
+icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chancetstorms':u'','clear':u'','flurries':u'','fog':u'','hazy':u'','mostlycloudy':u'','mostlysunny':u'','partlycloudy':u'','partlysunny':u'','sleet':u'','rain':u'','sunny':u'','tstorms':u'','cloudy':u''}
+#flurries        u'\uf01b'
+#mostlysunny     u'\uf00c'
+#mostlycloudy    u'\uf031'
+#partlycloudy    u'\uf002'
+#partlysunny     u'\uf002'
+#clear           u'\uf00d'
+#sunny           u'\uf00d'
+#cloudy          u'\uf031'
+#hazy            u'\uf0b6'
+#chancesnow      u'\uf00a'
+#sleet           u'\uf0b2'
+#tstorms         u'\uf033'
+#fog             u'\uf014'
+#rain            u'\uf008'
+#chancesleet     u'\uf0b2'
+#chancerain      u'\uf00d'
+#chancetstorms   u'\uf01e'
+#degC = 0xF03C
+#deg = 0xF042
+#thermo = 0xF055
+#thermo_out = 0xF053
+#thermo_in = 0xF054
+#fire = 0xF0c7
+#earthquake = 0xF0C6
+#barometer = 0xF079
+#humidity = 0xF07A
+
 class Layout_1:
     def __init__(self):
         self.width   = 128 # epd2in13.EPD_WIDTH
@@ -23,6 +51,8 @@ class Layout_1:
         self.row_4_y = self.sep_4_y + self.sh1
         self.sep_5_y = self.row_4_y + self.ch2
         self.row_5_y = self.sep_5_y + self.sh1
+        self.sep_6_y = self.row_5_y + self.ch2
+        self.row_6_y = self.sep_6_y + self.sh1
 
         # Random values for test
         self.water   = 890
@@ -126,13 +156,31 @@ class Layout_1:
 #        self.c13     = Component(32, self.ch2, 20, image='icons/thermometer2_32x32.png')
         self.c13     = Component(self.ch2, self.ch2, font_size=20, image='icons/euro-512.png')
         self.c13.set_position(80, self.row_5_y + 6 + self.ch2, 90)
+#----
+        self.c16   = Component(self.ch2, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=22)
+        self.c16.set_position(0, self.row_6_y + 6 + self.ch2)
+        self.c16.set_text(u'\uF055', x=0, align=1)
+        self.c16.draw_borders()
+        
+        self.c17   = Component(self.ch2, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=22)
+        self.c17.set_position(32, self.row_6_y + 6 + self.ch2)
+        self.c17.set_text(u'\uF079', x=0, align=1)
 
+        self.c18   = Component(self.ch2, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=22)
+        self.c18.set_position(56, self.row_6_y + 6 + self.ch2)
+        self.c18.set_text(u'\uF07A', x=0, align=1)
+        
+        self.c19   = Component(self.ch2, self.ch2, image='icons/fan_200.png')
+        self.c19.set_position(80, self.row_6_y + 6 + self.ch2)
+        
+#----        
         # Add components to the layout
 #        self.epd.add([self.c1, self.c2, self.separator1])
         self.epd.add([self.c1, self.c2])
         self.epd.add([self.c3, self.c4, self.u1, self.separator2, self.c5, self.c6, self.u2, self.separator3])
         self.epd.add([self.c7, self.c8, self.u3, self.separator4, self.c14, self.c15, self.u4])
         self.epd.add([self.separator5, self.c10, self.c11, self.c12, self.c13])
+        self.epd.add([self.c16, self.c17, self.c18, self.c19])
 
         self.epd.show()
 
