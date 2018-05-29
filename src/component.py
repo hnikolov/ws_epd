@@ -20,6 +20,9 @@ icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chan
 #chancesleet     u'\uf0b2'
 #chancerain      u'\uf00d'
 #chancetstorms   u'\uf01e'
+# Cyrillic arial starts at 0x03
+# supperscript of '3' u'\u00B3'
+# subscript of '2' u'\u2083'
 
 font_weather_icons = ImageFont.truetype('fonts/weathericons-regular-webfont.ttf', 35)
 #draw.text((30,330),icons_list[str(icon)],font=font_weather_icons,fill=255)

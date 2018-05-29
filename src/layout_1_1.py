@@ -38,6 +38,7 @@ class Layout_1:
         self.height  = 250 # epd2in13.EPD_HEIGHT
         self.ch1     =  16 # component height 1
         self.ch2     =  26 # component height 2
+        self.ch3     =  32 # component height 3
         self.sh1     =   3 # separator height 1
 
         # Offsets
@@ -101,7 +102,7 @@ class Layout_1:
 
         self.u2   = Component(40, self.ch2, font_size=16)
         self.u2.set_position(88, self.row_2_y)
-        self.u2.set_text("m3", 0, align=0)
+        self.u2.set_text("m" + u'\u00B3', 0, align=0)
 
         self.separator3 = Separator(self.width, self.sh1)
         self.separator3.set_position(0, self.sep_3_y)
@@ -120,13 +121,13 @@ class Layout_1:
         self.separator4 = Separator(self.width, self.sh1, bg_color=255)
         self.separator4.set_position(0, self.sep_4_y)
 
-        self.c14   = Component(self.ch2, self.ch2, font_size=20, image='icons/power_32x32.png')
-        self.c14.set_position(0, self.row_4_y)
-#        self.c14.draw_borders()
+        self.c77   = Component(self.ch2, self.ch2, font_size=20, image='icons/power_32x32.png')
+        self.c77.set_position(0, self.row_4_y)
+#        self.c77.draw_borders()
 
-        self.c15   = Component(56, self.ch2, font_size=18)
-        self.c15.set_position(32, self.row_4_y)
-        self.c15.set_text("12.678")
+        self.c88   = Component(56, self.ch2, font_size=18)
+        self.c88.set_position(32, self.row_4_y)
+        self.c88.set_text("12.678")
 
         self.u4   = Component(40, self.ch2, font_size=16)
         self.u4.set_position(88, self.row_4_y)
@@ -144,42 +145,47 @@ class Layout_1:
         self.c10.set_text("C10, TBD", x=12)
         self.c10.draw_borders()
 
-#        self.c11   = Component(self.ch2, self.ch2, 20, image='icons/power.png')
-        self.c11   = Component(self.ch2, self.ch2, font_size=20, image='icons/iaq-house.png')
+        self.c11   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, image='icons/fan_200.png')
         self.c11.set_position(0, self.row_5_y + 6 + self.ch2)
-        self.c11.draw_borders()
 
-        self.c12   = Component(self.ch2, self.ch2, font_size=20, image='icons/emeter_32x32.png')
-        self.c12.set_position(40, self.row_5_y + 6 + self.ch2)
-        self.c12.draw_borders()
+        self.c12   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, image='icons/fan_200.png')
+        self.c12.set_position(32, self.row_5_y + 6 + self.ch2, r=180)
+        
+#        self.c13   = Component(self.ch2, self.ch2, 20, image='icons/power.png')
+        self.c13   = Component(self.ch3, self.ch3, iw=self.ch3-4, ih=self.ch3-4, image='icons/iaq-house.png')
+        self.c13.set_position(64, self.row_5_y + 6 + self.ch2)
+        self.c13.draw_borders()
 
-#        self.c13     = Component(32, self.ch2, 20, image='icons/thermometer2_32x32.png')
-        self.c13     = Component(self.ch2, self.ch2, font_size=20, image='icons/euro-512.png')
-        self.c13.set_position(80, self.row_5_y + 6 + self.ch2, 90)
+        self.c14   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, font_size=20, image='icons/emeter_32x32.png')
+        self.c14.set_position(96, self.row_5_y + 6 + self.ch2)
+#        self.c14.draw_borders()
+
 #----
-        self.c16   = Component(self.ch2, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=22)
-        self.c16.set_position(0, self.row_6_y + 6 + self.ch2)
-        self.c16.set_text(u'\uF055', x=0, align=1)
-        self.c16.draw_borders()
-        
-        self.c17   = Component(self.ch2, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=22)
-        self.c17.set_position(32, self.row_6_y + 6 + self.ch2)
-        self.c17.set_text(u'\uF079', x=0, align=1)
+        self.c16     = Component(self.ch3, self.ch3, font_size=24)
+        self.c16.set_text(u'\u20AC', x=0, align=1) # Euro
+#        self.c16     = Component(self.ch3, self.ch3, iw=self.ch3-4, ih=self.ch3-4, image='icons/euro-512.png')
+        self.c16.set_position(0, self.row_6_y + 6 + self.ch3)
 
-        self.c18   = Component(self.ch2, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=22)
-        self.c18.set_position(56, self.row_6_y + 6 + self.ch2)
-        self.c18.set_text(u'\uF07A', x=0, align=1)
+        self.c17   = Component(self.ch3, self.ch3, font='fonts/weathericons-regular-webfont.ttf', font_size=23)
+        self.c17.set_position(32, self.row_6_y + 6 + self.ch3)
+        self.c17.set_text(u'\uF055', x=0, align=1)
         
-        self.c19   = Component(self.ch2, self.ch2, image='icons/fan_200.png')
-        self.c19.set_position(80, self.row_6_y + 6 + self.ch2)
+        self.c18   = Component(self.ch3, self.ch3, font='fonts/weathericons-regular-webfont.ttf', font_size=23)
+        self.c18.set_position(64, self.row_6_y + 6 + self.ch3)
+        self.c18.set_text(u'\uF079', x=0, align=1)
+
+        self.c19   = Component(self.ch3, self.ch3, font='fonts/weathericons-regular-webfont.ttf', font_size=23)
+        self.c19.set_position(96, self.row_6_y + 6 + self.ch3)
+        self.c19.set_text(u'\uF07A', x=0, align=1)
+
         
 #----        
         # Add components to the layout
 #        self.epd.add([self.c1, self.c2, self.separator1])
         self.epd.add([self.c1, self.c2])
         self.epd.add([self.c3, self.c4, self.u1, self.separator2, self.c5, self.c6, self.u2, self.separator3])
-        self.epd.add([self.c7, self.c8, self.u3, self.separator4, self.c14, self.c15, self.u4])
-        self.epd.add([self.separator5, self.c10, self.c11, self.c12, self.c13])
+        self.epd.add([self.c7, self.c8, self.u3, self.separator4, self.c77, self.c88, self.u4])
+        self.epd.add([self.separator5, self.c10, self.c11, self.c12, self.c13, self.c14])
         self.epd.add([self.c16, self.c17, self.c18, self.c19])
 
         self.epd.show()
