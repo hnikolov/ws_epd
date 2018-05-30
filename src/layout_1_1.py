@@ -61,7 +61,7 @@ class Layout_1:
         self.elec    = 12.3
 
         # E-Paper Display instance
-        self.epd = EPD(False)
+        self.epd = EPD(True)
         self.epd.refresh()
 #        self.epd.clear()
 
@@ -113,7 +113,7 @@ class Layout_1:
         self.c8   = Component(56, self.ch2, font_size=18)
         self.c8.set_position(32, self.row_3_y)
         self.c8.set_text("1.345")
-        
+
         self.u3   = Component(40, self.ch2, font_size=16)
         self.u3.set_position(88, self.row_3_y)
         self.u3.set_text("kWh", 0, align=0)
@@ -150,7 +150,7 @@ class Layout_1:
 
         self.c12   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, image='icons/fan_200.png')
         self.c12.set_position(32, self.row_5_y + 6 + self.ch2, r=180)
-        
+
 #        self.c13   = Component(self.ch2, self.ch2, 20, image='icons/power.png')
         self.c13   = Component(self.ch3, self.ch3, iw=self.ch3-4, ih=self.ch3-4, image='icons/iaq-house.png')
         self.c13.set_position(64, self.row_5_y + 6 + self.ch2)
@@ -166,10 +166,10 @@ class Layout_1:
 #        self.c16     = Component(self.ch3, self.ch3, iw=self.ch3-4, ih=self.ch3-4, image='icons/euro-512.png')
         self.c16.set_position(0, self.row_6_y + 6 + self.ch3)
 
-        self.c17   = Component(self.ch3, self.ch3, font='fonts/weathericons-regular-webfont.ttf', font_size=23)
+        self.c17   = Component(self.ch3, self.ch3, font='fonts/weathericons-regular-webfont.ttf', font_size=20)
         self.c17.set_position(32, self.row_6_y + 6 + self.ch3)
         self.c17.set_text(u'\uF055', x=0, align=1)
-        
+
         self.c18   = Component(self.ch3, self.ch3, font='fonts/weathericons-regular-webfont.ttf', font_size=23)
         self.c18.set_position(64, self.row_6_y + 6 + self.ch3)
         self.c18.set_text(u'\uF079', x=0, align=1)
@@ -178,8 +178,8 @@ class Layout_1:
         self.c19.set_position(96, self.row_6_y + 6 + self.ch3)
         self.c19.set_text(u'\uF07A', x=0, align=1)
 
-        
-#----        
+
+#----
         # Add components to the layout
 #        self.epd.add([self.c1, self.c2, self.separator1])
         self.epd.add([self.c1, self.c2])
