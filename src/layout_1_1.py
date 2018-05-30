@@ -61,7 +61,7 @@ class Layout_1:
         self.elec    = 12.3
 
         # E-Paper Display instance
-        self.epd = EPD(True)
+        self.epd = EPD(False)
         self.epd.refresh()
 #        self.epd.clear()
 
@@ -200,10 +200,8 @@ class Layout_1:
 
     def clear_all(self):
         self.water = 0
-        self.c4.clear()
         self.c4.set_text(str(self.water))
         self.gas = 0
-        self.c6.clear()
         self.c6.set_text(str(self.gas))
         self.epd.update()
 
@@ -219,7 +217,6 @@ if __name__ == '__main__':
 #        L1.epd.update()
 
     L1.epd.refresh()
-#    L1.epd.clear()
     L1.clear_all()
 
     for i in range(10):
