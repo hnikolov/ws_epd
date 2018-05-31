@@ -1,7 +1,8 @@
 ws_epd
 ==========
 
-Convenience utility for WaveShare E-Paper Displays.
+Convenience utility for **WaveShare E-Paper Displays**.
+
 Supports 2.13inch_e-Paper_HAT.
 There is an emulation mode (``self.epd = EPD(False)``) which uses Tk to show PIL Image objects.
 The advantage of using Tk over using Image.show() is that it will reuse the
