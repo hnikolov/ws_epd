@@ -32,6 +32,8 @@ icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chan
 #barometer = 0xF079
 #humidity = 0xF07A
 
+# TODO: Fonts and icons taken from local ws_epd folders. Allow for absolute paths as well
+
 class Layout_1:
     def __init__(self):
         self.width   = 128 # epd2in13.EPD_WIDTH
@@ -78,7 +80,7 @@ class Layout_1:
         self.separator1 = Separator(self.width, self.sh1, bg_color=255)
         self.separator1.set_position(0, self.sep_1_y)
 
-        self.c3   = Component(self.ch2, self.ch2, font_size=20, image='icons/tap-water1.jpg')
+        self.c3   = Component(self.ch2, self.ch2, font_size=20, image='tap-water1.jpg')
         self.c3.set_position(0, self.row_1_y)
 #        self.c3.draw_borders()
 
@@ -93,7 +95,7 @@ class Layout_1:
         self.separator2 = Separator(self.width, self.sh1, bg_color=255)
         self.separator2.set_position(0, self.sep_2_y)
 
-        self.c5   = Component(self.ch2, self.ch2, font_size=20, image='icons/gas_32x32.png')
+        self.c5   = Component(self.ch2, self.ch2, font_size=20, image='gas_32x32.png')
         self.c5.set_position(0, self.row_2_y)
 
         self.c6   = Component(56, self.ch2, font_size=18)
@@ -107,7 +109,7 @@ class Layout_1:
         self.separator3 = Separator(self.width, self.sh1)
         self.separator3.set_position(0, self.sep_3_y)
 
-        self.c7   = Component(self.ch2, self.ch2, font_size=20, image='icons/plug1.png')
+        self.c7   = Component(self.ch2, self.ch2, font_size=20, image='plug1.png')
         self.c7.set_position(0, self.row_3_y)
 
         self.c8   = Component(56, self.ch2, font_size=18)
@@ -121,7 +123,7 @@ class Layout_1:
         self.separator4 = Separator(self.width, self.sh1, bg_color=255)
         self.separator4.set_position(0, self.sep_4_y)
 
-        self.c77   = Component(self.ch2, self.ch2, font_size=20, image='icons/power_32x32.png')
+        self.c77   = Component(self.ch2, self.ch2, font_size=20, image='power_32x32.png')
         self.c77.set_position(0, self.row_4_y)
 #        self.c77.draw_borders()
 
@@ -145,36 +147,36 @@ class Layout_1:
         self.c10.set_text("C10, TBD", x=12)
         self.c10.draw_borders()
 
-        self.c11   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, image='icons/fan_200.png')
+        self.c11   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, image='fan_200.png')
         self.c11.set_position(0, self.row_5_y + 6 + self.ch2)
 
-        self.c12   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, image='icons/fan_200.png')
+        self.c12   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, image='fan_200.png')
         self.c12.set_position(32, self.row_5_y + 6 + self.ch2, r=180)
 
 #        self.c13   = Component(self.ch2, self.ch2, 20, image='icons/power.png')
-        self.c13   = Component(self.ch3, self.ch3, iw=self.ch3-4, ih=self.ch3-4, image='icons/iaq-house.png')
+        self.c13   = Component(self.ch3, self.ch3, iw=self.ch3-4, ih=self.ch3-4, image='iaq-house.png')
         self.c13.set_position(64, self.row_5_y + 6 + self.ch2)
         self.c13.draw_borders()
 
-        self.c14   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, font_size=20, image='icons/emeter_32x32.png')
+        self.c14   = Component(self.ch3, self.ch3, iw=self.ch3-8, ih=self.ch3-8, font_size=20, image='emeter_32x32.png')
         self.c14.set_position(96, self.row_5_y + 6 + self.ch2)
 #        self.c14.draw_borders()
 
 #----
         self.c16     = Component(self.ch3, self.ch3, font_size=24)
         self.c16.set_text(u'\u20AC', x=0, align=1) # Euro
-#        self.c16     = Component(self.ch3, self.ch3, iw=self.ch3-4, ih=self.ch3-4, image='icons/euro-512.png')
+#        self.c16     = Component(self.ch3, self.ch3, iw=self.ch3-4, ih=self.ch3-4, image='euro-512.png')
         self.c16.set_position(0, self.row_6_y + 6 + self.ch3)
 
-        self.c17   = Component(self.ch3, self.ch3, font='fonts/weathericons-regular-webfont.ttf', font_size=20)
+        self.c17   = Component(self.ch3, self.ch3, font='weathericons-regular-webfont.ttf', font_size=20)
         self.c17.set_position(32, self.row_6_y + 6 + self.ch3)
         self.c17.set_text(u'\uF055', x=0, align=1)
 
-        self.c18   = Component(self.ch3, self.ch3, font='fonts/weathericons-regular-webfont.ttf', font_size=23)
+        self.c18   = Component(self.ch3, self.ch3, font='weathericons-regular-webfont.ttf', font_size=23)
         self.c18.set_position(64, self.row_6_y + 6 + self.ch3)
         self.c18.set_text(u'\uF079', x=0, align=1)
 
-        self.c19   = Component(self.ch3, self.ch3, font='fonts/weathericons-regular-webfont.ttf', font_size=23)
+        self.c19   = Component(self.ch3, self.ch3, font='weathericons-regular-webfont.ttf', font_size=23)
         self.c19.set_position(96, self.row_6_y + 6 + self.ch3)
         self.c19.set_text(u'\uF07A', x=0, align=1)
 

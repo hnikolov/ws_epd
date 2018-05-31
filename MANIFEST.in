@@ -1,0 +1,2 @@
+include ws_epd/fonts/*
+include ws_epd/icons/*

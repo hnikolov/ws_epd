@@ -1,0 +1,32 @@
+Metadata-Version: 1.1
+Name: ws-epd
+Version: 0.0.1
+Summary: TBD
+Home-page: https://github.com/hnikolov/ws_epd.git
+Author: Hristo Nikolov
+Author-email: h.n.nikolov@gmail.com
+License: MIT
+Description: ws_epd
+        ==========
+        
+        Convenience utility for WaveShare E-Paper Displays.
+        Currently supports 2.13inch_e-Paper_HAT.
+        There is a mock-mode which uses Tk to show PIL Image objects.
+        The advantage of this over using Image.show() is that it will reuse the
+        same window, so you can show multiple images without opening a new
+        window for each image (good to simulate display updates). 
+        This mode is to be used to quickly develop and test display layouts on desktop/laptop.
+        There is no need to download to RaspberryPi and using real 2.13inch_e-Paper_HAT.
+        
+        Try in the src folder:
+        
+        python layout_1.py
+        
+        Note: Very preliminary version, the mock-up is not completely precise w.r.t. to the real epd. Work in progress.
+        
+Keywords: e-paper display,spi
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)

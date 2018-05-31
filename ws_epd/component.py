@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from PIL import Image, ImageDraw, ImageFont
-#from epd_mockup import EPD_MOCKUP
 
 icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chancetstorms':u'','clear':u'','flurries':u'','fog':u'','hazy':u'','mostlycloudy':u'','mostlysunny':u'','partlycloudy':u'','partlysunny':u'','sleet':u'','rain':u'','sunny':u'','tstorms':u'','cloudy':u''}
 #flurries        u'\uf01b'
@@ -24,7 +23,11 @@ icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chan
 # supperscript of '3' u'\u00B3'
 # subscript of '2' u'\u2083'
 
-font_weather_icons = ImageFont.truetype('fonts/weathericons-regular-webfont.ttf', 35)
+import os.path
+path_prefix = os.path.dirname(__file__)
+#print path_prefix 
+
+# font_weather_icons = ImageFont.truetype(path_prefix + '/fonts/' + 'weathericons-regular-webfont.ttf', 35)
 #draw.text((30,330),icons_list[str(icon)],font=font_weather_icons,fill=255)
 
 # TODO: Magic constants
@@ -33,7 +36,7 @@ class Component(object):
 #    def __init__(self, width, height, font_size, bg_color = 255, image = None):
     def __init__(self, width, height, bg_color = 255,          \
                        iw = 24,       ih = 24,  image = None,  \
-                       font = 'fonts/arial.ttf', font_size = 14):
+                       font = 'arial.ttf', font_size = 14):
                        
         self.bg        = 255 if bg_color == 255 else 0   # 0 - black, 255 - white
         self.fg        = 0   if bg_color == 255 else 255
@@ -55,9 +58,9 @@ class Component(object):
 #            self.image.paste(im, ((width-self.w)/2, (self.h-self.w)/2))
 
         self.draw      = ImageDraw.Draw(self.image)
-        self.font      = ImageFont.truetype(font, font_size)
-#        self.font      = ImageFont.truetype('fonts/arial.ttf', font_size)
-#        self.font      = ImageFont.truetype('fonts/weathericons-regular-webfont.ttf', font_size)
+        self.font      = ImageFont.truetype(path_prefix + '/fonts/' + font, font_size)
+#        self.font      = ImageFont.truetype(path_prefix + '/fonts/' + 'arial.ttf', font_size)
+#        self.font      = ImageFont.truetype(path_prefix + '/fonts/' + 'weathericons-regular-webfont.ttf', font_size)
         self.aleft     = 0
         self.acenter   = 1
         self.aright    = 2
@@ -81,7 +84,7 @@ class Component(object):
     def set_image(self, width, height, image):         
         self.image = Image.new('1', (self.w, self.h), self.bg)
         if image != None:
-            im = Image.open(image)
+            im = Image.open(path_prefix + '/icons/' + image)
             im = im.resize((width,height), Image.ANTIALIAS)
             # center image within component
             self.image.paste(im, ((self.w-width)/2, (self.h-height)/2))

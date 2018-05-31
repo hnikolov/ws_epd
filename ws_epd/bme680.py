@@ -32,6 +32,8 @@ icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chan
 #barometer = 0xF079
 #humidity = 0xF07A
 
+# TODO: Fonts and icons taken from local ws_epd folders. Allow for absolute paths as well
+
 class Layout_1:
     def __init__(self):
         self.width   = 128 # epd2in13.EPD_WIDTH
@@ -79,7 +81,7 @@ class Layout_1:
         self.separator1 = Separator(self.width, self.sh1, bg_color=255)
         self.separator1.set_position(0, self.sep_1_y)
 
-        self.ti   = Component(self.ch2, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=20)
+        self.ti   = Component(self.ch2, self.ch2, font='weathericons-regular-webfont.ttf', font_size=20)
         self.ti.set_position(0, self.row_1_y)
         self.ti.set_text(u'\uF055', x=0, align=1) # Temperature
         
@@ -87,14 +89,14 @@ class Layout_1:
         self.tv.set_position(24, self.row_1_y)
         self.tv.set_text(str(self.temperature))
 
-        self.tu   = Component(40, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=24)
+        self.tu   = Component(40, self.ch2, font='weathericons-regular-webfont.ttf', font_size=24)
         self.tu.set_position(88, self.row_1_y)
         self.tu.set_text(u'\uF03C', x=0, align=0)
 
         self.separator2 = Separator(self.width, self.sh1, bg_color=255)
         self.separator2.set_position(0, self.sep_2_y)
 
-        self.pi   = Component(self.ch2, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=20)
+        self.pi   = Component(self.ch2, self.ch2, font='weathericons-regular-webfont.ttf', font_size=20)
         self.pi.set_position(0, self.row_2_y)
         self.pi.set_text(u'\uF079', x=0, align=1) # Pressure
 
@@ -109,7 +111,7 @@ class Layout_1:
         self.separator3 = Separator(self.width, self.sh1)
         self.separator3.set_position(0, self.sep_3_y)
 
-        self.hi   = Component(self.ch2, self.ch2, font='fonts/weathericons-regular-webfont.ttf', font_size=20)
+        self.hi   = Component(self.ch2, self.ch2, font='weathericons-regular-webfont.ttf', font_size=20)
         self.hi.set_position(0, self.row_3_y)
         self.hi.set_text(u'\uF07A', x=0, align=1) # Humidity
 
@@ -124,7 +126,7 @@ class Layout_1:
         self.separator4 = Separator(self.width, self.sh1, bg_color=255)
         self.separator4.set_position(0, self.sep_4_y)
 
-        self.qi   = Component(self.ch2, self.ch2, iw=self.ch2, ih=self.ch2, image='icons/iaq-house.png')
+        self.qi   = Component(self.ch2, self.ch2, iw=self.ch2, ih=self.ch2, image='iaq-house.png')
         self.qi.set_position(0, self.row_4_y)
 #        self.qi.draw_borders()
 
@@ -141,10 +143,10 @@ class Layout_1:
 
         # --------------------------------------------------
 
-        self.c11   = Component(56, 56, iw=56, ih=56, image='icons/fan_200.png')
+        self.c11   = Component(56, 56, iw=56, ih=56, image='fan_200.png')
         self.c11.set_position(0, self.row_5_y + self.ch2)
 
-        self.c12   = Component(56, 56, iw=56, ih=56, image='icons/fan_200.png')
+        self.c12   = Component(56, 56, iw=56, ih=56, image='fan_200.png')
         self.c12.set_position(64, self.row_5_y + self.ch2, r=180)
 
 #----
