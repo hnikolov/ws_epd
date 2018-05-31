@@ -17,11 +17,11 @@ Try in the ws_epd folder: ::
 
 To run in emulation mode, make sure that the E-Paper Display instance is given False as an argument:
 
-``self.epd = EPD(**False**)``
+``self.epd = EPD( False )``
 
 When using a real 2.13inch_e-Paper_HAT connected to a RaspberryPi, make sure you change the instance to:
 
-self.epd = EPD(**True**)
+``self.epd = EPD( True )``
 
 Install ``ws_epd`` from source
 ------------------------------
