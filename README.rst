@@ -12,7 +12,7 @@ There is no need to download to RaspberryPi and using real 2.13inch_e-Paper_HAT.
 
 Try in the ws_epd folder: ::
 
-	$ cd ws_epd/ws_epd
+    $ cd ws_epd/ws_epd
     $ python layout_1.py
 
 To run in emulation mode, make sure that the E-Paper Display instance is given False as an argument: ::
