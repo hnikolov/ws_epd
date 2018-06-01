@@ -16,18 +16,18 @@ Try in the ws_epd folder: ::
     $ cd ws_epd/ws_epd
     $ python layout_1.py
 
-To run in emulation mode, make sure that the E-Paper Display instance is given False as an argument:
+To run in emulation mode, make sure that the E-Paper Display instance is given ``False`` as an argument:
 
 ``self.epd = EPD( False )``
 
-When using a real 2.13inch_e-Paper_HAT connected to a RaspberryPi, make sure you change the instance to:
+When using a real 2.13inch_e-Paper_HAT connected to a RaspberryPi, change the instance to:
 
 ``self.epd = EPD( True )``
 
 Install ``ws_epd`` from source
 ------------------------------
 
-To use this utility in other projects, install it by ::
+To use this utility in other projects, install it by: ::
 
 	$ cd ws_epd
 	$ sudo python setup.py develop
