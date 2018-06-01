@@ -176,6 +176,23 @@ class Layout_1:
         self.air_quality += increase
         self.qv.set_text(str(self.air_quality))
 
+    def set_temperature(self, value):
+        self.temperature = value
+        self.tv.set_text(str(self.temperature))
+
+    def set_humidity(self, value):
+        self.humidity = value
+        self.hv.set_text(str(self.humidity))
+
+    def set_pressure(self, value):
+        self.pressure = value
+        # TODO: set if value changed
+        self.pv.set_text(str(round(self.pressure, 1)))
+
+    def set_air_quality(self, value):
+        self.air_quality = value
+        self.qv.set_text(str(self.air_quality))
+
 
 if __name__ == '__main__':
 
