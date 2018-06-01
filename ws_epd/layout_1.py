@@ -33,6 +33,7 @@ icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chan
 #humidity = 0xF07A
 
 # TODO: Fonts and icons taken from local ws_epd folders. Allow for absolute paths as well
+# TODO: Date and time as a separate component?
 
 class Layout_1:
     def __init__(self):
@@ -61,7 +62,9 @@ class Layout_1:
         self.water   = 890
         self.gas     = 2.64
         self.elec    = 12.3
-
+        self.sdate   = time.strftime('%d-%b-%y')
+        self.stime   = time.strftime('%H:%M')
+        
         # E-Paper Display instance
         self.epd = EPD(False)
         self.epd.refresh()
@@ -70,11 +73,11 @@ class Layout_1:
         # Build the layout
         self.c1   = Component(80, self.ch1, font_size=13, bg_color=0)
         self.c1.set_position(0, 0)
-        self.c1.set_text(time.strftime('%d-%b-%y'), x=10)
+        self.c1.set_text(self.sdate, x=10)
 
         self.c2   = Component(48, self.ch1, font_size=13, bg_color=255)
         self.c2.set_position(80, 0)
-        self.c2.set_text(time.strftime('%H:%M'), x=4)
+        self.c2.set_text(self.stime, x=4)
 #        self.c2.draw_borders()
     # ----------------
         self.separator1 = Separator(self.width, self.sh1, bg_color=255)
@@ -207,7 +210,20 @@ class Layout_1:
         self.c6.set_text(str(self.gas))
         self.epd.update()
 
-
+    def set_date_time(self):
+        tdate = time.strftime('%d-%b-%y')
+        ttime = time.strftime('%H:%M')
+        
+        if self.sdate != tdate:
+            self.sdate = tdate
+            self.c1.set_text(self.sdate, x=10)
+            # TODO: Also self.epd.refresh() ?
+    
+        if self.stime != ttime:
+            self.stime = ttime
+            self.c2.set_text(self.stime, x=4)
+            
+            
 if __name__ == '__main__':
 
     L1 = Layout_1()
@@ -215,6 +231,7 @@ if __name__ == '__main__':
     for i in range(10):
         L1.inc_water(1)
         L1.inc_gas(0.01)
+        L1.set_date_time()
         L1.epd.update_1b1()
 #        L1.epd.update()
 
@@ -224,6 +241,7 @@ if __name__ == '__main__':
     for i in range(10):
         L1.inc_water(1)
         L1.inc_gas(0.01)
+        L1.set_date_time()
         L1.epd.update()
 #        L1.epd.update_1b1()
 

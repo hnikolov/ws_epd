@@ -31,6 +31,9 @@ path_prefix = os.path.dirname(__file__)
 #draw.text((30,330),icons_list[str(icon)],font=font_weather_icons,fill=255)
 
 # TODO: Magic constants
+# TODO: Fonts and icons taken from local ws_epd folders. Allow for absolute paths as well
+# TODO: Date and time as a separate component?
+
 class Component(object):
 
 #    def __init__(self, width, height, font_size, bg_color = 255, image = None):

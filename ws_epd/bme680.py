@@ -33,6 +33,7 @@ icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chan
 #humidity = 0xF07A
 
 # TODO: Fonts and icons taken from local ws_epd folders. Allow for absolute paths as well
+# TODO: Date and time as a separate component?
 
 class Layout_1:
     def __init__(self):
@@ -61,7 +62,9 @@ class Layout_1:
         self.temperature = 23.45
         self.pressure    = 1013.6
         self.humidity    = 46.78
-        self.air_quality = 92.14 
+        self.air_quality = 92.14
+        self.sdate       = time.strftime('%d-%b-%y')
+        self.stime       = time.strftime('%H:%M')
 
         # E-Paper Display instance
         self.epd = EPD(False)
@@ -71,11 +74,11 @@ class Layout_1:
         # Build the layout
         self.c1   = Component(80, self.ch1, font_size=13, bg_color=0)
         self.c1.set_position(0, 0)
-        self.c1.set_text(time.strftime('%d-%b-%y'), x=10)
+        self.c1.set_text(self.sdate, x=10)
 
         self.c2   = Component(48, self.ch1, font_size=13, bg_color=255)
         self.c2.set_position(80, 0)
-        self.c2.set_text(time.strftime('%H:%M'), x=4)
+        self.c2.set_text(self.stime, x=4)
 #        self.c2.draw_borders()
     # ----------------
         self.separator1 = Separator(self.width, self.sh1, bg_color=255)
@@ -159,41 +162,58 @@ class Layout_1:
 
         self.epd.show()
 
+    # Note: inc_() used for testing, to be removed
     def inc_temperature(self, increase):
         self.temperature += increase
-        self.tv.set_text(str(self.temperature))
-
-    def inc_humidity(self, increase):
-        self.humidity += increase
-        self.hv.set_text(str(self.humidity))
+        self.tv.set_text("{0:.2f}".format(self.temperature))
 
     def inc_pressure(self, increase):
         self.pressure += increase
         # TODO: set if value changed
-        self.pv.set_text(str(round(self.pressure, 1)))
+        self.pv.set_text("{0:.1f}".format(self.pressure))
+
+    def inc_humidity(self, increase):
+        self.humidity += increase
+        self.hv.set_text("{0:.2f}".format(self.humidity))
 
     def inc_air_quality(self, increase):
         self.air_quality += increase
-        self.qv.set_text(str(self.air_quality))
-
+        self.qv.set_text("{0:.2f}".format(self.air_quality))
+    # -----------------------------------------
     def set_temperature(self, value):
-        self.temperature = value
-        self.tv.set_text(str(self.temperature))
-
-    def set_humidity(self, value):
-        self.humidity = value
-        self.hv.set_text(str(self.humidity))
+        if self.temperature != value:
+            self.temperature = value
+            self.tv.set_text("{0:.2f}".format(self.temperature))
 
     def set_pressure(self, value):
-        self.pressure = value
-        # TODO: set if value changed
-        self.pv.set_text(str(round(self.pressure, 1)))
+        if self.pressure != value:
+            self.pressure = value
+            self.pv.set_text("{0:.1f}".format(self.pressure))
+
+    def set_humidity(self, value):
+        if self.humidity != value:
+            self.humidity = value
+            self.hv.set_text("{0:.2f}".format(self.humidity))
 
     def set_air_quality(self, value):
-        self.air_quality = value
-        self.qv.set_text(str(self.air_quality))
+        if self.air_quality != value:
+            self.air_quality = value
+            self.qv.set_text("{0:.2f}".format(self.air_quality))
 
-
+    def set_date_time(self):
+        tdate = time.strftime('%d-%b-%y')
+        ttime = time.strftime('%H:%M')
+        
+        if self.sdate != tdate:
+            self.sdate = tdate
+            self.c1.set_text(self.sdate, x=10)
+            # TODO: Also self.epd.refresh() ?
+    
+        if self.stime != ttime:
+            self.stime = ttime
+            self.c2.set_text(self.stime, x=4)
+    
+            
 if __name__ == '__main__':
 
     L1 = Layout_1()
@@ -201,6 +221,7 @@ if __name__ == '__main__':
     for i in range(10):
         L1.inc_temperature(.38)
         L1.inc_pressure(0.06)
+        L1.set_date_time()
         L1.epd.update_1b1()
 
     L1.epd.refresh()
@@ -210,6 +231,7 @@ if __name__ == '__main__':
         L1.inc_pressure(0.06)
         L1.inc_humidity(.25)
         L1.inc_air_quality(-0.31)
+        L1.set_date_time()
         L1.epd.update()
 
     raw_input()
