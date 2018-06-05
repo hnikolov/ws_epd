@@ -73,7 +73,7 @@ class EPD:
 
 
     def update(self):
-        # No need to set the 2 frame memories, initially done by show()
+        # No need to set the 2 frame memories, but always need to update all data components
         for c in self.components:
             if c.invalid == True:
 #                self.epd.set_frame_memory(c.image, c.x, c.y)
@@ -82,14 +82,14 @@ class EPD:
         self.epd.display_frame()
 
 
-    # TODO: works but to be removed
+    # Works for updating single components at a time
     def update_1b1(self):
         for c in self.components:
             if c.invalid == True:
                 self.update_component(c)
                 c.invalid = False
 
-    # TODO: works but to be removed
+    # Works for updating single components at a time
     def update_component(self, c):
         self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
         self.epd.display_frame()

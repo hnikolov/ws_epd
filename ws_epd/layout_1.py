@@ -59,11 +59,12 @@ class Layout_1:
         self.row_6_y = self.sep_6_y + self.sh1
 
         # Random values for test
-        self.water   = 890
-        self.gas     = 2.64
-        self.elec    = 12.3
-        self.sdate   = time.strftime('%d-%b-%y')
-        self.stime   = time.strftime('%H:%M')
+        self.water    = 890
+        self.gas      = 2.64
+        self.elec     = 0
+        self.day_elec = 12.3
+        self.sdate    = time.strftime('%d-%b-%y')
+        self.stime    = time.strftime('%H:%M')
         
         # E-Paper Display instance
         self.epd = EPD(False)
@@ -117,7 +118,7 @@ class Layout_1:
 
         self.c8   = Component(56, self.ch2, font_size=18)
         self.c8.set_position(32, self.row_3_y)
-        self.c8.set_text("1.345")
+        self.c8.set_text("{0:.3f}".format(self.elec))
 
         self.u3   = Component(40, self.ch2, font_size=16)
         self.u3.set_position(88, self.row_3_y)
@@ -132,7 +133,7 @@ class Layout_1:
 
         self.c88   = Component(56, self.ch2, font_size=18)
         self.c88.set_position(32, self.row_4_y)
-        self.c88.set_text("12.678")
+        self.c88.set_text("{0:.3f}".format(self.day_elec))
 
         self.u4   = Component(40, self.ch2, font_size=16)
         self.u4.set_position(88, self.row_4_y)
@@ -199,15 +200,27 @@ class Layout_1:
         self.water += increase
         self.c4.set_text(str(self.water))
 
+    def set_elec(self, value):
+        self.elec = value
+        self.c8.set_text("{0:.3f}".format(self.elec))
+
+    def inc_day_elec(self, increase):
+        self.day_elec += increase
+        self.c88.set_text("{0:.3f}".format(self.day_elec))
+
     def inc_gas(self, increase):
         self.gas += increase
-        self.c6.set_text(str(self.gas))
+        self.c6.set_text("{0:.2f}".format(self.gas))
 
     def clear_all(self):
         self.water = 0
         self.c4.set_text(str(self.water))
         self.gas = 0
-        self.c6.set_text(str(self.gas))
+        self.c6.set_text("{0:.2f}".format(self.gas))
+        self.elec = 0
+        self.c8.set_text("{0:.3f}".format(self.elec))
+        self.day_elec = 0
+        self.c88.set_text("{0:.3f}".format(self.day_elec))
         self.epd.update()
 
     def set_date_time(self):
