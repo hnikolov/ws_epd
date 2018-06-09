@@ -40,7 +40,7 @@ class Component(object):
     def __init__(self, width, height, bg_color = 255,          \
                        iw = 24,       ih = 24,  image = None,  \
                        font = 'arial.ttf', font_size = 14):
-                       
+
         self.bg        = 255 if bg_color == 255 else 0   # 0 - black, 255 - white
         self.fg        = 0   if bg_color == 255 else 255
 
@@ -52,7 +52,7 @@ class Component(object):
         self.y         = 0 #
         self.rot       = 0 # Rotate the image when set in the frame memory (0, 90, 180, 270)
         # -------------------------------------------------------------------------------------
-        
+
         self.set_image(iw, ih, image) # TODO/Note: rot=90, image must be square
 #        self.image = Image.new('1', (width, height), bg_color)
 #        if image != None:
@@ -71,27 +71,27 @@ class Component(object):
 
         self.invalid   = True # To redraw when True
         self.borders   = False # TODO
-    
+
     def set_width(self, width):
         # x point (size and position) must be the multiple of 8 or the last 3 bits will be ignored
         self.w         = width & 0xF8
         if width & 0x03 != 0: print "Width is not multiple of 8. Trimmed to", self.w
-        if width > 128: 
+        if width > 128:
             "Width is > 128. Set to 128"
-            self.w = 128   
+            self.w = 128
 
     def set_height(self, height):
         if height > 250: "Height is > 250. Set to 250"
         self.h = height if height <= 250 else 250
-           
-    def set_image(self, width, height, image):         
+
+    def set_image(self, width, height, image):
         self.image = Image.new('1', (self.w, self.h), self.bg)
         if image != None:
             im = Image.open(path_prefix + '/icons/' + image)
             im = im.resize((width,height), Image.ANTIALIAS)
             # center image within component
             self.image.paste(im, ((self.w-width)/2, (self.h-height)/2))
-            
+
     def set_position(self, x, y, r=0):
         # x point (size and position) must be the multiple of 8 or the last 3 bits will be ignored
         self.x = x & 0xF8
@@ -100,7 +100,7 @@ class Component(object):
         if self.h + self.y > 250: print "Y-position and height > 250"
         self.rot = r
 
-        
+
     def draw_borders(self):
         w = self.w if self.x + self.w < 122 else 122 - self.x
         self.draw.line((0,   0,        w-1, 0       ), fill=self.fg)
@@ -126,10 +126,10 @@ class Component(object):
             elif align == self.acenter:
                 tx = self.w/2-(w/2)
                 ty = (self.h - h) >> 1
-            
+
             self.draw.text((tx, ty), text, font = self.font, fill = self.fg)
 #            self.draw.text((tx, ty),icons_list[u'chancerain'],font=self.font,fill=self.fg)
-            
+
         else:
             self.draw.text((x, y), text, font = self.font, fill = self.fg)
         self.invalid = True
@@ -138,7 +138,6 @@ class Component(object):
     def clear(self):
         self.draw.rectangle((0, 0, self.w-1, self.h-1), fill=self.bg)
         self.invalid = True
-
 
 
 class Separator(Component):
