@@ -67,7 +67,7 @@ class Layout_1:
         self.stime       = time.strftime('%H:%M')
 
         # E-Paper Display instance
-        self.epd = EPD(False)
+        self.epd = EPD(True)
         self.epd.refresh()
 #        self.epd.clear()
 
@@ -87,7 +87,7 @@ class Layout_1:
         self.ti   = Component(self.ch2, self.ch2, font='weathericons-regular-webfont.ttf', font_size=20)
         self.ti.set_position(0, self.row_1_y)
         self.ti.set_text(u'\uF055', x=0, align=1) # Temperature
-        
+
         self.tv   = Component(64, self.ch2, font_size=18)
         self.tv.set_position(24, self.row_1_y)
         self.tv.set_text(str(self.temperature))
@@ -180,40 +180,41 @@ class Layout_1:
         self.air_quality += increase
         self.qv.set_text("{0:.2f}".format(self.air_quality))
     # -----------------------------------------
+    # TODO/Note: We set always data because we set only one memory buffer at once...
     def set_temperature(self, value):
-        if self.temperature != value:
-            self.temperature = value
-            self.tv.set_text("{0:.2f}".format(self.temperature))
+#        if self.temperature != value:
+        self.temperature = value
+        self.tv.set_text("{0:.2f}".format(self.temperature))
 
     def set_pressure(self, value):
-        if self.pressure != value:
-            self.pressure = value
-            self.pv.set_text("{0:.1f}".format(self.pressure))
+#        if self.pressure != value:
+        self.pressure = value
+        self.pv.set_text("{0:.1f}".format(self.pressure))
 
     def set_humidity(self, value):
-        if self.humidity != value:
-            self.humidity = value
-            self.hv.set_text("{0:.2f}".format(self.humidity))
+#        if self.humidity != value:
+        self.humidity = value
+        self.hv.set_text("{0:.2f}".format(self.humidity))
 
     def set_air_quality(self, value):
-        if self.air_quality != value:
-            self.air_quality = value
-            self.qv.set_text("{0:.2f}".format(self.air_quality))
+#        if self.air_quality != value:
+        self.air_quality = value
+        self.qv.set_text("{0:.2f}".format(self.air_quality))
 
     def set_date_time(self):
         tdate = time.strftime('%d-%b-%y')
         ttime = time.strftime('%H:%M')
-        
-        if self.sdate != tdate:
-            self.sdate = tdate
-            self.c1.set_text(self.sdate, x=10)
+
+#        if self.sdate != tdate:
+        self.sdate = tdate
+        self.c1.set_text(self.sdate, x=10)
             # TODO: Also self.epd.refresh() ?
-    
-        if self.stime != ttime:
-            self.stime = ttime
-            self.c2.set_text(self.stime, x=4)
-    
-            
+
+#        if self.stime != ttime:
+        self.stime = ttime
+        self.c2.set_text(self.stime, x=4)
+
+
 if __name__ == '__main__':
 
     L1 = Layout_1()

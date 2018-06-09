@@ -9,7 +9,6 @@ ws_epd/epd2in13.py
 ws_epd/epd2in13_mock.py
 ws_epd/epdif.py
 ws_epd/layout_1.py
-ws_epd/layout_1_1.py
 ws_epd.egg-info/PKG-INFO
 ws_epd.egg-info/SOURCES.txt
 ws_epd.egg-info/dependency_links.txt

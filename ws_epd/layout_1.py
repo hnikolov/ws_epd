@@ -65,9 +65,9 @@ class Layout_1:
         self.day_elec = 12.3
         self.sdate    = time.strftime('%d-%b-%y')
         self.stime    = time.strftime('%H:%M')
-        
+
         # E-Paper Display instance
-        self.epd = EPD(False)
+        self.epd = EPD(True)
         self.epd.refresh()
 #        self.epd.clear()
 
