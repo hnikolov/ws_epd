@@ -229,7 +229,7 @@ class Layout_1:
         self.set_elec(0)
         self.set_day_elec(0)
         self.set_gas(0)
-        self.epd.update() # Do we keep this here?
+
 
     def set_date_time(self):
         tdate = time.strftime('%d-%b-%y')
@@ -254,10 +254,10 @@ if __name__ == '__main__':
         L1.inc_gas(0.01)
         L1.set_date_time()
         L1.epd.update_1b1()
-#        L1.epd.update()
 
     L1.epd.refresh()
     L1.clear_all()
+    L1.epd.update()
 
     for i in range(10):
         L1.inc_water(1)
