@@ -69,7 +69,7 @@ class Component(object):
         self.aright    = 2
         self.align     = self.aright
 
-        self.invalid   = True # To redraw when True
+        self.invalid   = 2 # To redraw in every frame memory
         self.borders   = False # TODO
     
     def set_width(self, width):
@@ -107,7 +107,7 @@ class Component(object):
         self.draw.line((0,   0,        0,   self.h-1), fill=self.fg)
         self.draw.line((0,   self.h-1, w-1, self.h-1), fill=self.fg)
         self.draw.line((w-1, self.h-1, w-1, 0       ), fill=self.fg)
-        self.invalid = True
+        self.invalid = 2
 
     # TODO: 1 line or more
     def set_text(self, text, x=5, y=None, align=None):
@@ -132,12 +132,12 @@ class Component(object):
             
         else:
             self.draw.text((x, y), text, font = self.font, fill = self.fg)
-        self.invalid = True
+        self.invalid = 2
 
 
     def clear(self):
         self.draw.rectangle((0, 0, self.w-1, self.h-1), fill=self.bg)
-        self.invalid = True
+        self.invalid = 2
 
 
 

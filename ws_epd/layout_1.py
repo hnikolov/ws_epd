@@ -200,6 +200,10 @@ class Layout_1:
         self.water += increase
         self.c4.set_text(str(self.water))
 
+    def set_water(self, value):
+        self.water = value
+        self.c4.set_text(str(self.water))
+
     def set_elec(self, value):
         self.elec = value
         self.c8.set_text("{0:.3f}".format(self.elec))
@@ -208,20 +212,24 @@ class Layout_1:
         self.day_elec += increase
         self.c88.set_text("{0:.3f}".format(self.day_elec))
 
+    def set_day_elec(self, value):
+        self.day_elec = value
+        self.c88.set_text("{0:.3f}".format(self.day_elec))
+
     def inc_gas(self, increase):
         self.gas += increase
         self.c6.set_text("{0:.2f}".format(self.gas))
 
-    def clear_all(self):
-        self.water = 0
-        self.c4.set_text(str(self.water))
-        self.gas = 0
+    def set_gas(self, value):
+        self.gas = value
         self.c6.set_text("{0:.2f}".format(self.gas))
-        self.elec = 0
-        self.c8.set_text("{0:.3f}".format(self.elec))
-        self.day_elec = 0
-        self.c88.set_text("{0:.3f}".format(self.day_elec))
-        self.epd.update()
+
+    def clear_all(self):
+        self.set_water(0)
+        self.set_elec(0)
+        self.set_day_elec(0)
+        self.set_gas(0)
+        self.epd.update() # Do we keep this here?
 
     def set_date_time(self):
         tdate = time.strftime('%d-%b-%y')
