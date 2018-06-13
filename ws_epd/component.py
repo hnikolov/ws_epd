@@ -141,6 +141,6 @@ class Component(object):
 
 
 class Separator(Component):
-    def __init__(self, width, height, bg_color = 255, image = None):
+    def __init__(self, width, height, bg_color = 255, x1=32, x2=48, image = None):
         super(Separator, self).__init__(width, height, font_size=3, bg_color=bg_color, image=image)
-        self.draw.line((32,height/2,48,height/2), fill=self.fg)
+        self.draw.line((x1, height/2, x2, height/2), fill=self.fg)
