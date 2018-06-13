@@ -8,20 +8,20 @@ class Layout_1:
                 
         self.width   = 128 # epd2in13.EPD_WIDTH
         self.height  = 250 # epd2in13.EPD_HEIGHT
-        self.ch1     =  18 # component height 1
+        self.ch1     =  17 # component height 1
         self.ch2     =  24 # component height 2
         self.sh1     =   3 # separator height 1
 
         # Offsets
         self.sep_1_y = self.ch1 # after (date and time)
-        self.row_1_y = self.sep_1_y + self.sh1
+        self.row_1_y = self.sep_1_y + self.sh1 + 2
         self.sep_2_y = self.row_1_y + self.ch2
         self.row_2_y = self.sep_2_y + self.sh1
         self.sep_3_y = self.row_2_y + self.ch2
         self.row_3_y = self.sep_3_y + self.sh1
         self.sep_4_y = self.row_3_y + self.ch2
         self.row_4_y = self.sep_4_y + self.sh1
-        self.sep_5_y = self.row_4_y + self.ch2
+        self.sep_5_y = self.row_4_y + self.ch2 + 4
         self.row_5_y = self.sep_5_y + self.sh1 + 4
         self.sep_6_y = self.row_5_y + self.ch2
         self.row_6_y = self.sep_6_y + self.sh1
@@ -44,11 +44,11 @@ class Layout_1:
         self.eur_total  = self.eur_water + self.eur_gas + self.eur_energy
         
         # Build the layout
-        self.cdate   = Component(80, self.ch1, font_size=14, bg_color=0)
+        self.cdate   = Component(80, self.ch1, font_size=15, bg_color=0)
         self.cdate.set_position(0, 0)
         self.cdate.set_text(self.sdate, align=1)
 
-        self.ctime   = Component(48, self.ch1, font_size=14, bg_color=255)
+        self.ctime   = Component(48, self.ch1, font_size=15, bg_color=255)
         self.ctime.set_position(80, 0)
         self.ctime.set_text(self.stime, x=4)
 #        self.ctime.draw_borders()
@@ -223,7 +223,7 @@ class Layout_1:
         
         if self.sdate != tdate:
             self.sdate = tdate
-            self.cdate.set_text(self.sdate, x=10)
+            self.cdate.set_text(self.sdate, align=1)
     
         if self.stime != ttime:
             self.stime = ttime

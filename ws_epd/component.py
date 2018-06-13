@@ -119,13 +119,13 @@ class Component(object):
             if align == self.aright:
                 o = x if self.x + self.w < 122 else self.x + self.w - 122 + x
                 tx = self.w - o - w
-                ty = (self.h - h) >> 1
+                ty = ((self.h - h) >> 1)-1
             elif align == self.aleft:
                 tx = x
-                ty = (self.h - h) >> 1
+                ty = ((self.h - h) >> 1)-1
             elif align == self.acenter:
                 tx = self.w/2-(w/2)
-                ty = (self.h - h) >> 1
+                ty = ((self.h - h) >> 1)-1
 
             self.draw.text((tx, ty), text, font = self.font, fill = self.fg)
 #            self.draw.text((tx, ty),icons_list[u'chancerain'],font=self.font,fill=self.fg)
