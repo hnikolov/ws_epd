@@ -2,7 +2,7 @@
 import time
 from component import Component, Separator
 
-class Layout_1:
+class Layout_2:
     def __init__(self):
         self.components  = []
                 
@@ -31,17 +31,17 @@ class Layout_1:
         self.row_8_y = self.sep_8_y + self.sh1
 
         # Random values for test
-        self.water    = 890
-        self.gas      = 2.64
-        self.elec     = 0
-        self.day_elec = 12.3
-        self.sdate    = time.strftime('%d-%b-%y')
-        self.stime    = time.strftime('%H:%M')
+        self.water           = 890
+        self.gas             = 2.64
+        self.electricity     = 0
+        self.day_electricity = 12.3
+        self.sdate           = time.strftime('%d-%b-%y')
+        self.stime           = time.strftime('%H:%M')
 
-        self.eur_water  = 0.23
-        self.eur_gas    = 0.66
-        self.eur_energy = 1.79
-        self.eur_total  = self.eur_water + self.eur_gas + self.eur_energy
+        self.eur_water       = 0.23
+        self.eur_gas         = 0.66
+        self.eur_electricity = 1.79
+        self.eur_total       = self.eur_water + self.eur_gas + self.eur_electricity
         
         # Build the layout
         self.cdate   = Component(80, self.ch1, font_size=15, bg_color=0)
@@ -90,7 +90,7 @@ class Layout_1:
 
         self.pv   = Component(56, self.ch2, font_size=18)
         self.pv.set_position(32, self.row_3_y)
-        self.pv.set_text("{0:.3f}".format(self.elec))
+        self.pv.set_text("{0:.3f}".format(self.electricity))
 
         self.pu   = Component(40, self.ch2, font_size=16)
         self.pu.set_position(88, self.row_3_y)
@@ -104,7 +104,7 @@ class Layout_1:
 
         self.ev   = Component(56, self.ch2, font_size=18)
         self.ev.set_position(32, self.row_4_y)
-        self.ev.set_text("{0:.3f}".format(self.day_elec))
+        self.ev.set_text("{0:.3f}".format(self.day_electricity))
 
         self.eu   = Component(40, self.ch2, font_size=16)
         self.eu.set_position(88, self.row_4_y)
@@ -139,13 +139,13 @@ class Layout_1:
         self.egu.set_position(88, self.row_6_y)
         self.egu.set_text(u'\u20AC', x=0, align=0) # Euro       
         
-        # Euro energy
+        # Euro electricity
         self.eei   = Component(self.ch2, self.ch2, font_size=20, image='power_32x32.png')
         self.eei.set_position(0, self.row_7_y)
 
         self.eev   = Component(56, self.ch2, font_size=18)
         self.eev.set_position(32, self.row_7_y)
-        self.eev.set_text("{0:.2f}".format(self.eur_energy))
+        self.eev.set_text("{0:.2f}".format(self.eur_electricity))
 
         self.eeu   = Component(40, self.ch2, font_size=16)
         self.eeu.set_position(88, self.row_7_y)
@@ -190,17 +190,9 @@ class Layout_1:
         self.water = value
         self.wv.set_text(str(self.water))
 
-    def set_elec(self, value):
-        self.elec = value
-        self.pv.set_text("{0:.3f}".format(self.elec))
-
-    def inc_day_elec(self, increase):
-        self.day_elec += increase
-        self.ev.set_text("{0:.3f}".format(self.day_elec))
-
-    def set_day_elec(self, value):
-        self.day_elec = value
-        self.ev.set_text("{0:.3f}".format(self.day_elec))
+    def set_eur_water(self, value):
+        self.eur_water = value
+        self.ewv.set_text("{0:.2f}".format(self.eur_water))
 
     def inc_gas(self, increase):
         self.gas += increase
@@ -210,11 +202,48 @@ class Layout_1:
         self.gas = value
         self.gv.set_text("{0:.2f}".format(self.gas))
 
+    def set_eur_gas(self, value):
+        self.eur_gas = value
+        self.egv.set_text("{0:.2f}".format(self.eur_gas))
+
+    def set_electricity(self, value):
+        self.electricity = value
+        self.pv.set_text("{0:.3f}".format(self.electricity))
+
+    def inc_day_electricity(self, increase):
+        self.day_electricity += increase
+        self.ev.set_text("{0:.3f}".format(self.day_electricity))
+
+    def set_day_electricity(self, value):
+        self.day_electricity = value
+        self.ev.set_text("{0:.3f}".format(self.day_electricity))
+
+    def set_eur_electricity(self, value):
+        self.eur_electricity = value
+        self.eev.set_text("{0:.2f}".format(self.eur_electricity))
+
+    def set_eur_total(self, value):
+        self.eur_total = value
+        self.etv.set_text("{0:.2f}".format(self.eur_total))
+
     def clear_all(self):
+        self.water           = 0
+        self.gas             = 0
+        self.electricity     = 0
+        self.day_electricity = 0
+        self.eur_water       = 0
+        self.eur_gas         = 0
+        self.eur_electricity = 0
+        self.eur_total       = 0
+
         self.set_water(0)
-        self.set_elec(0)
-        self.set_day_elec(0)
         self.set_gas(0)
+        self.set_electricity(0)
+        self.set_day_electricity(0)
+        self.set_eur_water(0)
+        self.set_eur_gas(0)
+        self.set_eur_electricity(0)
+        self.set_eur_total(0)
 
 
     def set_date_time(self):
@@ -235,33 +264,30 @@ if __name__ == '__main__':
     from epd import EPD
 
     # Display Layout instance
-    L1 = Layout_1()
+    L2 = Layout_2()
     
     # E-Paper Display instance
     epd = EPD(False)
-    epd.add( L1.components )
+    epd.add( L2.components )
 
     epd.refresh()
 #    self.epd.clear()
     epd.show()
 
     for i in range(10):
-        L1.inc_water(1)
-        L1.inc_gas(0.01)
-        L1.set_date_time()
+        L2.inc_water(1)
+        L2.inc_gas(0.01)
+        L2.set_date_time()
         epd.update_1b1()
 
     epd.refresh()
-    L1.clear_all()
+    L2.clear_all()
     epd.update()
 
     for i in range(10):
-        L1.inc_water(1)
-        L1.inc_gas(0.01)
-        L1.set_date_time()
+        L2.inc_water(1)
+        L2.inc_gas(0.01)
+        L2.set_date_time()
         epd.update()
 
     raw_input()
-
-#    for k,v in icons_list.iteritems():
-#        print k, hex(ord(v)) #, unichr(ord(v))
