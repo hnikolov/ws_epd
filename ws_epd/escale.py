@@ -6,7 +6,7 @@ from component import Component, Separator
 class Escale(Layout):
     def __init__(self):
         super(Escale, self).__init__()
-                
+
         self.ch1     =  20 # component height 1
         self.ch2     =  24 # component height 2
         self.sh1     =   3 # separator height 1
@@ -36,13 +36,13 @@ class Escale(Layout):
         self.value_3 = 0
         self.value_4 = 0
         self.value_5 = 0
-        
+
         # Build the layout
         # ----------------
         self.h1  = Component(self.width, self.ch1, bg_color=0, font_size=16)
         self.h1.set_position(0, self.row_0_y)
         self.h1.set_text("0.25g resolution", align=1)
-        
+
         self.v1i  = Component(self.ch2, self.ch2, font_size=14)
         self.v1i.set_position(0, self.row_1_y)
         self.v1i.set_text('1', x=0, align=1) # 1 sample (no averaging)
@@ -57,7 +57,7 @@ class Escale(Layout):
 
         self.separator2 = Separator(self.width, self.sh1, bg_color=255)
         self.separator2.set_position(0, self.sep_2_y)
-        
+
         self.v2i  = Component(self.ch2, self.ch2, font_size=14)
         self.v2i.set_position(0, self.row_2_y)
         self.v2i.set_text('4', x=0, align=1) # Average of 4 samples
@@ -69,12 +69,12 @@ class Escale(Layout):
         self.v2u  = Component(32, self.ch2, font_size=16)
         self.v2u.set_position(96, self.row_2_y)
         self.v2u.set_text('g', x=0, align=0) # grams
-      
+
         # ----------------
         self.h2  = Component(self.width, self.ch1, bg_color=0, font_size=16)
         self.h2.set_position(0, self.row_3_y)
         self.h2.set_text("0.5g resolution", align=1)
-        
+
         self.v3i  = Component(self.ch2, self.ch2, font_size=14)
         self.v3i.set_position(0, self.row_4_y)
         self.v3i.set_text('1', x=0, align=1) # 1 sample (no averaging)
@@ -89,7 +89,7 @@ class Escale(Layout):
 
         self.separator5 = Separator(self.width, self.sh1, bg_color=255)
         self.separator5.set_position(0, self.sep_5_y)
-        
+
         self.v4i  = Component(self.ch2, self.ch2, font_size=14)
         self.v4i.set_position(0, self.row_5_y)
         self.v4i.set_text('4', x=0, align=1) # Average of 4 samples
@@ -100,13 +100,13 @@ class Escale(Layout):
 
         self.v4u  = Component(32, self.ch2, font_size=16)
         self.v4u.set_position(96, self.row_5_y)
-        self.v4u.set_text('g', x=0, align=0) # grams       
-        
+        self.v4u.set_text('g', x=0, align=0) # grams
+
         # ----------------
         self.h3  = Component(self.width, self.ch1, bg_color=0, font_size=16)
         self.h3.set_position(0, self.row_6_y)
         self.h3.set_text("1g resolution", align=1)
-        
+
         self.v5i  = Component(self.ch2, self.ch2, font_size=14)
         self.v5i.set_position(0, self.row_7_y)
         self.v5i.set_text('1', x=0, align=1) # 1 sample (no averaging)
@@ -117,8 +117,8 @@ class Escale(Layout):
 
         self.v5u  = Component(32, self.ch2, font_size=16)
         self.v5u.set_position(96, self.row_7_y)
-        self.v5u.set_text('g', x=0, align=0) # grams        
- 
+        self.v5u.set_text('g', x=0, align=0) # grams
+
         # Add components to the layout
         self.add([self.h1, self.v1i, self.v1v, self.v1u, self.separator2, self.v2i, self.v2v, self.v2u])
         self.add([self.h2, self.v3i, self.v3v, self.v3u, self.separator5, self.v4i, self.v4v, self.v4u])
@@ -151,28 +151,25 @@ class Escale(Layout):
             self.v5v.set_text("{0:.0f}".format(self.value_5))
 
     def clear_all(self):
-        self.value_1 = 0
-        self.value_2 = 0
-        self.value_3 = 0
-        self.value_4 = 0
-        self.value_5 = 0
-
         self.set_value_1(0)
         self.set_value_2(0)
         self.set_value_3(0)
         self.set_value_4(0)
         self.set_value_5(0)
 
-        
+
 if __name__ == '__main__':
 
     from epd import EPD
 
     # Display Layout instance
     L1 = Escale()
-    
+
     # E-Paper Display instance
-    epd = EPD(False, L1)
+    epd = EPD(True, L1) # TODO
+#    epd = EPD(True)
+#    epd.add( L1.components )
+#    epd.show()
 
     val = 123
     for i in range(10):
@@ -188,7 +185,7 @@ if __name__ == '__main__':
         L1.set_value_5(val_1)
         epd.update()
 
-    epd.refresh()
+#    epd.refresh() # TODO
     L1.clear_all()
     epd.update()
 
@@ -198,13 +195,13 @@ if __name__ == '__main__':
         val_25 = L1.round_to(val, 0.25)
         val_50 = L1.round_to(val, 0.5)
         val_1  = L1.round_to(val, 1.0)
-        
+
         L1.set_value_1(val_25)
         L1.set_value_2(val_25)
         L1.set_value_3(val_50)
         L1.set_value_4(val_50)
         L1.set_value_5(val_1)
-        
+
         epd.update()
 
     raw_input()

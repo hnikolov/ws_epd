@@ -31,12 +31,13 @@ class EPD:
             self.image_invrt = Image.new('1', (128, 250),   0)
 
         self.clear()
-        
+
         self.components = []
         if Layout != None:
             self.add(Layout.components)
-        
-        self.refresh()
+            self.show()
+
+        # self.refresh() # TODO
 
 
     def add(self, component):

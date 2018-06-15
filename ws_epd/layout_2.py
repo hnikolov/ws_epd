@@ -6,7 +6,7 @@ from component import Component, Separator
 class Layout_2(Layout):
     def __init__(self):
         super(Layout_2, self).__init__()
-                
+
         self.ch1     =  17 # component height 1
         self.ch2     =  24 # component height 2
         self.sh1     =   3 # separator height 1
@@ -41,7 +41,7 @@ class Layout_2(Layout):
         self.eur_gas         = 0.66
         self.eur_electricity = 1.79
         self.eur_total       = self.eur_water + self.eur_gas + self.eur_electricity
-        
+
         # Build the layout
         self.cdate   = Component(80, self.ch1, font_size=15, bg_color=0)
         self.cdate.set_position(0, 0)
@@ -124,7 +124,7 @@ class Layout_2(Layout):
         self.ewu   = Component(40, self.ch2, font_size=16)
         self.ewu.set_position(88, self.row_5_y)
         self.ewu.set_text(u'\u20AC', x=0, align=0) # Euro
-        
+
         # Euro gas
         self.egi   = Component(self.ch2, self.ch2, font_size=20, image='gas_32x32.png')
         self.egi.set_position(0, self.row_6_y)
@@ -136,8 +136,8 @@ class Layout_2(Layout):
 
         self.egu   = Component(40, self.ch2, font_size=16)
         self.egu.set_position(88, self.row_6_y)
-        self.egu.set_text(u'\u20AC', x=0, align=0) # Euro       
-        
+        self.egu.set_text(u'\u20AC', x=0, align=0) # Euro
+
         # Euro electricity
         self.eei   = Component(self.ch2, self.ch2, font_size=20, image='power_32x32.png')
         self.eei.set_position(0, self.row_7_y)
@@ -227,15 +227,6 @@ class Layout_2(Layout):
             self.etv.set_text("{0:.2f}".format(self.eur_total))
 
     def clear_all(self):
-        self.water           = 0
-        self.gas             = 0
-        self.electricity     = 0
-        self.day_electricity = 0
-        self.eur_water       = 0
-        self.eur_gas         = 0
-        self.eur_electricity = 0
-        self.eur_total       = 0
-
         self.set_water(0)
         self.set_gas(0)
         self.set_electricity(0)
@@ -249,23 +240,23 @@ class Layout_2(Layout):
     def set_date_time(self):
         tdate = time.strftime('%d-%b-%y')
         ttime = time.strftime('%H:%M')
-        
+
         if self.sdate != tdate:
             self.sdate = tdate
             self.cdate.set_text(self.sdate, align=1)
-    
+
         if self.stime != ttime:
             self.stime = ttime
             self.ctime.set_text(self.stime, x=4)
-            
-            
+
+
 if __name__ == '__main__':
 
     from epd import EPD
 
     # Display Layout instance
     L2 = Layout_2()
-    
+
     # E-Paper Display instance
     epd = EPD(False, L2)
 
@@ -280,7 +271,7 @@ if __name__ == '__main__':
         L2.set_date_time()
         epd.update()
 
-    epd.refresh()
+    epd.refresh() # TODO
     L2.clear_all()
     epd.update()
 

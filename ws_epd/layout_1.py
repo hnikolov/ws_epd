@@ -37,7 +37,7 @@ icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chan
 class Layout_1(Layout):
     def __init__(self):
         super(Layout_1, self).__init__()
-        
+
         self.ch1     =  16 # component height 1
         self.ch2     =  26 # component height 2
         self.ch3     =  32 # component height 3
@@ -188,7 +188,7 @@ class Layout_1(Layout):
         self.add([self.separator5, self.c10, self.c11, self.c12, self.c13, self.c14])
         self.add([self.c16, self.c17, self.c18, self.c19])
 
-        
+
     def inc_water(self, increase):
         self.water += increase
         self.c4.set_text(str(self.water))
@@ -227,16 +227,16 @@ class Layout_1(Layout):
     def set_date_time(self):
         tdate = time.strftime('%d-%b-%y')
         ttime = time.strftime('%H:%M')
-        
+
         if self.sdate != tdate:
             self.sdate = tdate
             self.c1.set_text(self.sdate, x=10)
-    
+
         if self.stime != ttime:
             self.stime = ttime
             self.c2.set_text(self.stime, x=4)
-            
-            
+
+
 if __name__ == '__main__':
 
     from epd import EPD
@@ -248,14 +248,14 @@ if __name__ == '__main__':
     epd = EPD(False, L1)
 #    epd.add(L1.components)
 #    epd.show()
-    
+
     for i in range(10):
         L1.inc_water(1)
         L1.inc_gas(0.01)
         L1.set_date_time()
         epd.update()
 
-    epd.refresh()
+    epd.refresh() # TODO
     L1.clear_all()
     epd.update()
 

@@ -211,7 +211,7 @@ class BME680(Layout):
 if __name__ == '__main__':
 
     from epd import EPD
-    
+
     # Display layout instance
     L1 = BME680()
 
@@ -226,7 +226,7 @@ if __name__ == '__main__':
 
 #    epd.clear()
     epd.show()
-    epd.refresh()
+    epd.refresh() # TODO
 
     for i in range(10):
         L1.inc_temperature(.38)
