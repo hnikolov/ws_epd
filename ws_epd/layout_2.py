@@ -187,44 +187,52 @@ class Layout_2:
         self.wv.set_text(str(self.water))
 
     def set_water(self, value):
-        self.water = value
-        self.wv.set_text(str(self.water))
+        if self.water != value:
+            self.water = value
+            self.wv.set_text(str(self.water))
 
     def set_eur_water(self, value):
-        self.eur_water = value
-        self.ewv.set_text("{0:.2f}".format(self.eur_water))
+        if self.eur_water != value:
+            self.eur_water = value
+            self.ewv.set_text("{0:.2f}".format(self.eur_water))
 
     def inc_gas(self, increase):
         self.gas += increase
         self.gv.set_text("{0:.2f}".format(self.gas))
 
     def set_gas(self, value):
-        self.gas = value
-        self.gv.set_text("{0:.2f}".format(self.gas))
+        if self.gas != value:
+            self.gas = value
+            self.gv.set_text("{0:.2f}".format(self.gas))
 
     def set_eur_gas(self, value):
-        self.eur_gas = value
-        self.egv.set_text("{0:.2f}".format(self.eur_gas))
+        if self.eur_gas != value:
+            self.eur_gas = value
+            self.egv.set_text("{0:.2f}".format(self.eur_gas))
 
     def set_electricity(self, value):
-        self.electricity = value
-        self.pv.set_text("{0:.3f}".format(self.electricity))
+        if self.electricity != value:
+            self.electricity = value
+            self.pv.set_text("{0:.3f}".format(self.electricity))
 
     def inc_day_electricity(self, increase):
         self.day_electricity += increase
         self.ev.set_text("{0:.3f}".format(self.day_electricity))
 
     def set_day_electricity(self, value):
-        self.day_electricity = value
-        self.ev.set_text("{0:.3f}".format(self.day_electricity))
+        if self.day_electricity != value:
+            self.day_electricity = value
+            self.ev.set_text("{0:.3f}".format(self.day_electricity))
 
     def set_eur_electricity(self, value):
-        self.eur_electricity = value
-        self.eev.set_text("{0:.2f}".format(self.eur_electricity))
+        if self.eur_electricity != value:
+            self.eur_electricity = value
+            self.eev.set_text("{0:.2f}".format(self.eur_electricity))
 
     def set_eur_total(self, value):
-        self.eur_total = value
-        self.etv.set_text("{0:.2f}".format(self.eur_total))
+        if self.eur_total != value:
+            self.eur_total = value
+            self.etv.set_text("{0:.2f}".format(self.eur_total))
 
     def clear_all(self):
         self.water           = 0
@@ -267,18 +275,18 @@ if __name__ == '__main__':
     L2 = Layout_2()
     
     # E-Paper Display instance
-    epd = EPD(False)
-    epd.add( L2.components )
+    epd = EPD(False, L2)
 
-    epd.refresh()
-#    self.epd.clear()
-    epd.show()
+#    epd.add( L2.components )
+#    epd.refresh()
+#    epd.clear()
+#    epd.show()
 
     for i in range(10):
         L2.inc_water(1)
         L2.inc_gas(0.01)
         L2.set_date_time()
-        epd.update_1b1()
+        epd.update()
 
     epd.refresh()
     L2.clear_all()

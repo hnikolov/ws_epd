@@ -12,7 +12,7 @@ class EPD:
         w = 128, h = 250; usable resolution: 122 x 250
         x point (size and position) must be the multiple of 8 or the last 3 bits will be ignored
     """
-    def __init__(self, Waveshare = True):
+    def __init__(self, Waveshare = True, Layout = None):
         if Waveshare == True:
             import epd2in13
             self.epd = epd2in13.EPD()
@@ -30,7 +30,13 @@ class EPD:
             self.image_frame = Image.new('1', (128, 250), 255)  # 255: clear the frame
             self.image_invrt = Image.new('1', (128, 250),   0)
 
-        self.components  = []
+        self.clear()
+        
+        self.components = []
+        if Layout != None:
+            self.add(Layout.components)
+        
+        self.refresh()
 
 
     def add(self, component):
@@ -53,6 +59,7 @@ class EPD:
     def refresh(self):
         for c in self.components:
             self.image_frame.paste(c.image.rotate(c.rot), (c.x, c.y))
+            c.invalid = 0
 
         self.image_invrt = self.image_frame.convert('L')
         self.image_invrt = ImageOps.invert(self.image_invrt)
@@ -73,24 +80,12 @@ class EPD:
 
 
     def update(self):
-        # No need to set the 2 frame memories, but always need to update all data components
+        # OK to update only 1 memory buffer per iteration (reduced update latency)
+        # Since c.invalid starts from 2 and is decremented during update,
+        # the other memory buffer will be updated during the next update iteration.
         for c in self.components:
             if c.invalid != 0:
 #                self.epd.set_frame_memory(c.image, c.x, c.y)
                 self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
                 c.invalid -= 1
         self.epd.display_frame()
-
-
-    # Works for updating single components at a time; remove?
-    def update_1b1(self):
-        for c in self.components:
-            if c.invalid != 0:
-                self.update_component(c)
-                c.invalid -= 1
-
-    # Works for updating single components at a time
-    def update_component(self, c):
-        self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
-        self.epd.display_frame()
-        self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)

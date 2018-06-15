@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
-from PIL import ImageFont
-from epd import EPD
+from layout import Layout
 from component import Component, Separator
 
 icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chancetstorms':u'','clear':u'','flurries':u'','fog':u'','hazy':u'','mostlycloudy':u'','mostlysunny':u'','partlycloudy':u'','partlysunny':u'','sleet':u'','rain':u'','sunny':u'','tstorms':u'','cloudy':u''}
@@ -35,10 +34,10 @@ icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chan
 # TODO: Fonts and icons taken from local ws_epd folders. Allow for absolute paths as well
 # TODO: Date and time as a separate component?
 
-class Layout_1:
+class BME680(Layout):
     def __init__(self):
-        self.width   = 128 # epd2in13.EPD_WIDTH
-        self.height  = 250 # epd2in13.EPD_HEIGHT
+        super(BME680, self).__init__()
+
         self.ch1     =  15 # component height 1
         self.ch2     =  24 # component height 2
         self.ch3     =  32 # component height 3
@@ -66,10 +65,6 @@ class Layout_1:
         self.sdate       = time.strftime('%d-%b-%y')
         self.stime       = time.strftime('%H:%M')
 
-        # E-Paper Display instance
-        self.epd = EPD(True)
-        self.epd.refresh()
-#        self.epd.clear()
 
         # Build the layout
         self.c1   = Component(80, self.ch1, font_size=13, bg_color=0)
@@ -154,13 +149,12 @@ class Layout_1:
 
 #----
         # Add components to the layout
-#        self.epd.add([self.c1, self.c2, self.separator1])
-        self.epd.add([self.c1, self.c2])
-        self.epd.add([self.ti, self.tv, self.tu, self.separator2, self.pi, self.pv, self.pu, self.separator3])
-        self.epd.add([self.hi, self.hv, self.hu, self.separator4, self.qi, self.qv, self.qu])
-        self.epd.add([self.separator5, self.c11, self.c12])
+#        self.add([self.c1, self.c2, self.separator1])
+        self.add([self.c1, self.c2])
+        self.add([self.ti, self.tv, self.tu, self.separator2, self.pi, self.pv, self.pu, self.separator3])
+        self.add([self.hi, self.hv, self.hu, self.separator4, self.qi, self.qv, self.qu])
+        self.add([self.separator5, self.c11, self.c12])
 
-        self.epd.show()
 
     # Note: inc_() used for testing, to be removed
     def inc_temperature(self, increase):
@@ -180,52 +174,59 @@ class Layout_1:
         self.air_quality += increase
         self.qv.set_text("{0:.2f}".format(self.air_quality))
     # -----------------------------------------
-    # TODO/Note: We set always data because we set only one memory buffer at once...
+
     def set_temperature(self, value):
-#        if self.temperature != value:
-        self.temperature = value
-        self.tv.set_text("{0:.2f}".format(self.temperature))
+        if self.temperature != value:
+            self.temperature = value
+            self.tv.set_text("{0:.2f}".format(self.temperature))
 
     def set_pressure(self, value):
-#        if self.pressure != value:
-        self.pressure = value
-        self.pv.set_text("{0:.1f}".format(self.pressure))
+        if self.pressure != value:
+            self.pressure = value
+            self.pv.set_text("{0:.1f}".format(self.pressure))
 
     def set_humidity(self, value):
-#        if self.humidity != value:
-        self.humidity = value
-        self.hv.set_text("{0:.2f}".format(self.humidity))
+        if self.humidity != value:
+            self.humidity = value
+            self.hv.set_text("{0:.2f}".format(self.humidity))
 
     def set_air_quality(self, value):
-#        if self.air_quality != value:
-        self.air_quality = value
-        self.qv.set_text("{0:.2f}".format(self.air_quality))
+        if self.air_quality != value:
+            self.air_quality = value
+            self.qv.set_text("{0:.2f}".format(self.air_quality))
 
     def set_date_time(self):
         tdate = time.strftime('%d-%b-%y')
         ttime = time.strftime('%H:%M')
 
-#        if self.sdate != tdate:
-        self.sdate = tdate
-        self.c1.set_text(self.sdate, x=10)
-            # TODO: Also self.epd.refresh() ?
+        if self.sdate != tdate:
+            self.sdate = tdate
+            self.c1.set_text(self.sdate, x=10)
 
-#        if self.stime != ttime:
-        self.stime = ttime
-        self.c2.set_text(self.stime, x=4)
+        if self.stime != ttime:
+            self.stime = ttime
+            self.c2.set_text(self.stime, x=4)
 
 
 if __name__ == '__main__':
 
-    L1 = Layout_1()
+    from epd import EPD
+    
+    # Display layout instance
+    L1 = BME680()
+
+    # E-Paper Display instance
+    epd = EPD(False, L1)
 
     for i in range(10):
         L1.inc_temperature(.38)
         L1.inc_pressure(0.06)
         L1.set_date_time()
-        L1.epd.update_1b1()
+        epd.update()
 
-    L1.epd.refresh()
+#    epd.clear()
+    epd.show()
+    epd.refresh()
 
     for i in range(10):
         L1.inc_temperature(.38)
@@ -233,6 +234,6 @@ if __name__ == '__main__':
         L1.inc_humidity(.25)
         L1.inc_air_quality(-0.31)
         L1.set_date_time()
-        L1.epd.update()
+        epd.update()
 
     raw_input()

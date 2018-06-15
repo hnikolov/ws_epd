@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
-from PIL import ImageFont
-from epd import EPD
+from layout import Layout
 from component import Component, Separator
 
 icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chancetstorms':u'','clear':u'','flurries':u'','fog':u'','hazy':u'','mostlycloudy':u'','mostlysunny':u'','partlycloudy':u'','partlysunny':u'','sleet':u'','rain':u'','sunny':u'','tstorms':u'','cloudy':u''}
@@ -35,10 +34,10 @@ icons_list={u'chancerain':u'',u'chancesleet':u'','chancesnow':u'','chan
 # TODO: Fonts and icons taken from local ws_epd folders. Allow for absolute paths as well
 # TODO: Date and time as a separate component?
 
-class Layout_1:
+class Layout_1(Layout):
     def __init__(self):
-        self.width   = 128 # epd2in13.EPD_WIDTH
-        self.height  = 250 # epd2in13.EPD_HEIGHT
+        super(Layout_1, self).__init__()
+        
         self.ch1     =  16 # component height 1
         self.ch2     =  26 # component height 2
         self.ch3     =  32 # component height 3
@@ -65,11 +64,6 @@ class Layout_1:
         self.day_elec = 12.3
         self.sdate    = time.strftime('%d-%b-%y')
         self.stime    = time.strftime('%H:%M')
-
-        # E-Paper Display instance
-        self.epd = EPD(True)
-        self.epd.refresh()
-#        self.epd.clear()
 
         # Build the layout
         self.c1   = Component(80, self.ch1, font_size=13, bg_color=0)
@@ -188,14 +182,13 @@ class Layout_1:
 #----
         # Add components to the layout
 #        self.epd.add([self.c1, self.c2, self.separator1])
-        self.epd.add([self.c1, self.c2])
-        self.epd.add([self.c3, self.c4, self.u1, self.separator2, self.c5, self.c6, self.u2, self.separator3])
-        self.epd.add([self.c7, self.c8, self.u3, self.separator4, self.c77, self.c88, self.u4])
-        self.epd.add([self.separator5, self.c10, self.c11, self.c12, self.c13, self.c14])
-        self.epd.add([self.c16, self.c17, self.c18, self.c19])
+        self.add([self.c1, self.c2])
+        self.add([self.c3, self.c4, self.u1, self.separator2, self.c5, self.c6, self.u2, self.separator3])
+        self.add([self.c7, self.c8, self.u3, self.separator4, self.c77, self.c88, self.u4])
+        self.add([self.separator5, self.c10, self.c11, self.c12, self.c13, self.c14])
+        self.add([self.c16, self.c17, self.c18, self.c19])
 
-        self.epd.show()
-
+        
     def inc_water(self, increase):
         self.water += increase
         self.c4.set_text(str(self.water))
@@ -238,7 +231,6 @@ class Layout_1:
         if self.sdate != tdate:
             self.sdate = tdate
             self.c1.set_text(self.sdate, x=10)
-            # TODO: Also self.epd.refresh() ?
     
         if self.stime != ttime:
             self.stime = ttime
@@ -247,24 +239,31 @@ class Layout_1:
             
 if __name__ == '__main__':
 
+    from epd import EPD
+
+    # Display layout instance
     L1 = Layout_1()
 
+    # E-Paper Display instance
+    epd = EPD(False, L1)
+#    epd.add(L1.components)
+#    epd.show()
+    
     for i in range(10):
         L1.inc_water(1)
         L1.inc_gas(0.01)
         L1.set_date_time()
-        L1.epd.update_1b1()
+        epd.update()
 
-    L1.epd.refresh()
+    epd.refresh()
     L1.clear_all()
-    L1.epd.update()
+    epd.update()
 
     for i in range(10):
         L1.inc_water(1)
         L1.inc_gas(0.01)
         L1.set_date_time()
-        L1.epd.update()
-#        L1.epd.update_1b1()
+        epd.update()
 
     raw_input()
 
