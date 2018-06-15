@@ -216,7 +216,7 @@ if __name__ == '__main__':
     L1 = BME680()
 
     # E-Paper Display instance
-    epd = EPD(False, L1)
+    epd = EPD(True, L1)
 
     for i in range(10):
         L1.inc_temperature(.38)
@@ -225,7 +225,7 @@ if __name__ == '__main__':
         epd.update()
 
 #    epd.clear()
-    epd.show()
+#    epd.show()
     epd.refresh() # TODO
 
     for i in range(10):

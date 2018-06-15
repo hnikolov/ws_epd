@@ -30,9 +30,11 @@ class EPD:
             self.image_frame = Image.new('1', (128, 250), 255)  # 255: clear the frame
             self.image_invrt = Image.new('1', (128, 250),   0)
 
-        self.clear()
-
         self.components = []
+
+#        self.clear()
+        self.refresh()
+
         if Layout != None:
             self.add(Layout.components)
             self.show()
@@ -48,6 +50,7 @@ class EPD:
 
 
     def show(self):
+        if len(self.components) == 0: return
         for c in self.components:
             self.image_frame.paste(c.image, (c.x, c.y))
             c.invalid = 0
@@ -58,6 +61,17 @@ class EPD:
 
 
     def refresh(self):
+        self.epd.set_frame_memory(self.image_black, 0, 0)
+        self.epd.display_frame()
+
+        self.epd.set_frame_memory(self.image_white, 0, 0)
+        self.epd.display_frame()
+#        self.epd.display_frame()
+
+        self.show()
+
+
+    def refresh_NOT_OK(self):
         for c in self.components:
             self.image_frame.paste(c.image.rotate(c.rot), (c.x, c.y))
             c.invalid = 0
