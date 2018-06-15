@@ -11,3 +11,12 @@ class Layout(object):
             self.components.extend( component )
         else:
             self.components.append( component )
+
+
+    def round_to(self, value, res):
+        """
+        Round to e.g., 0.5, 0.02, 10, etc.
+        """
+        if res == 0:
+            return round(value)
+        return res * (round(value/res))

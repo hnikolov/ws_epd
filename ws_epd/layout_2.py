@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 import time
+from layout import Layout
 from component import Component, Separator
 
-class Layout_2:
+class Layout_2(Layout):
     def __init__(self):
-        self.components  = []
+        super(Layout_2, self).__init__()
                 
-        self.width   = 128 # epd2in13.EPD_WIDTH
-        self.height  = 250 # epd2in13.EPD_HEIGHT
         self.ch1     =  17 # component height 1
         self.ch2     =  24 # component height 2
         self.sh1     =   3 # separator height 1
@@ -52,7 +51,7 @@ class Layout_2:
         self.ctime.set_position(80, 0)
         self.ctime.set_text(self.stime, x=4)
 #        self.ctime.draw_borders()
-    # ----------------
+        # ----------------
         self.separator1 = Separator(self.width, self.sh1, bg_color=255)
         self.separator1.set_position(0, self.sep_1_y)
 
@@ -174,13 +173,6 @@ class Layout_2:
         self.add([self.ewi, self.ewv, self.ewu, self.egi, self.egv, self.egu, self.eei, self.eev, self.eeu])
         self.add([self.separator8, self.eti, self.etv, self.etu])
 
-
-    def add(self, component):
-        if isinstance(component, (list,)):
-            self.components.extend( component )
-        else:
-            self.components.append( component )
-        
 
     def inc_water(self, increase):
         self.water += increase
