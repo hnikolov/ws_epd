@@ -7,7 +7,7 @@ class Layout_2(Layout):
     def __init__(self):
         super(Layout_2, self).__init__()
 
-        self.ch1     =  17 # component height 1
+        self.ch1     =  20 # component height 1
         self.ch2     =  24 # component height 2
         self.sh1     =   3 # separator height 1
 
@@ -29,13 +29,15 @@ class Layout_2(Layout):
         self.sep_8_y = self.row_7_y + self.ch2
         self.row_8_y = self.sep_8_y + self.sh1
 
+#        self.sdate           = time.strftime('%d-%b-%y')
+        self.sdate           = time.strftime('%d-%b')
+        self.stime           = time.strftime('%H:%M')
+
         # Random values for test
         self.water           = 890
         self.gas             = 2.64
         self.electricity     = 0
         self.day_electricity = 12.3
-        self.sdate           = time.strftime('%d-%b-%y')
-        self.stime           = time.strftime('%H:%M')
 
         self.eur_water       = 0.23
         self.eur_gas         = 0.66
@@ -43,13 +45,13 @@ class Layout_2(Layout):
         self.eur_total       = self.eur_water + self.eur_gas + self.eur_electricity
 
         # Build the layout
-        self.cdate   = Component(80, self.ch1, font_size=15, bg_color=0)
+        self.cdate   = Component(72, self.ch1, font_size=18, bg_color=0)
         self.cdate.set_position(0, 0)
         self.cdate.set_text(self.sdate, align=1)
 
-        self.ctime   = Component(48, self.ch1, font_size=15, bg_color=255)
-        self.ctime.set_position(80, 0)
-        self.ctime.set_text(self.stime, x=4)
+        self.ctime   = Component(56, self.ch1, font_size=18, bg_color=255)
+        self.ctime.set_position(72, 0)
+        self.ctime.set_text(self.stime, x=3)
 #        self.ctime.draw_borders()
         # ----------------
         self.separator1 = Separator(self.width, self.sh1, bg_color=255)
@@ -238,7 +240,8 @@ class Layout_2(Layout):
 
 
     def set_date_time(self):
-        tdate = time.strftime('%d-%b-%y')
+#        tdate = time.strftime('%d-%b-%y')
+        tdate = time.strftime('%d-%b')
         ttime = time.strftime('%H:%M')
 
         if self.sdate != tdate:
