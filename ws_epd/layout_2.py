@@ -58,7 +58,7 @@ class Layout_2(Layout):
         self.separator1.set_position(0, self.sep_1_y)
 
         self.wi   = Component(self.ch2, self.ch2, font_size=20, image='tap-water1.jpg')
-        self.wi.set_position(0, self.row_1_y)
+        self.wi.set_position(8, self.row_1_y)
 #        self.wi.draw_borders()
 
         self.wv   = Component(56, self.ch2, font_size=18)
@@ -73,7 +73,7 @@ class Layout_2(Layout):
         self.separator2.set_position(0, self.sep_2_y)
 
         self.gi   = Component(self.ch2, self.ch2, font_size=20, image='gas_32x32.png')
-        self.gi.set_position(0, self.row_2_y)
+        self.gi.set_position(8, self.row_2_y)
 
         self.gv   = Component(56, self.ch2, font_size=18)
         self.gv.set_position(32, self.row_2_y)
@@ -86,30 +86,30 @@ class Layout_2(Layout):
         self.separator3 = Separator(self.width, self.sh1)
         self.separator3.set_position(0, self.sep_3_y)
 
-        self.pi   = Component(self.ch2, self.ch2, font_size=20, image='plug1.png')
-        self.pi.set_position(0, self.row_3_y)
+        self.ei   = Component(self.ch2, self.ch2, font_size=20, image='power_32x32.png')
+        self.ei.set_position(8, self.row_3_y)
 
-        self.pv   = Component(56, self.ch2, font_size=18)
-        self.pv.set_position(32, self.row_3_y)
-        self.pv.set_text("{0:.3f}".format(self.electricity))
+        self.ev   = Component(56, self.ch2, font_size=18)
+        self.ev.set_position(32, self.row_3_y)
+        self.ev.set_text("{0:.3f}".format(self.day_electricity))
 
-        self.pu   = Component(40, self.ch2, font_size=16)
-        self.pu.set_position(88, self.row_3_y)
-        self.pu.set_text("kWh", 0, align=0)
+        self.eu   = Component(40, self.ch2, font_size=16)
+        self.eu.set_position(88, self.row_3_y)
+        self.eu.set_text("kWh", 0, align=0)
 
         self.separator4 = Separator(self.width, self.sh1, bg_color=255)
         self.separator4.set_position(0, self.sep_4_y)
 
-        self.ei   = Component(self.ch2, self.ch2, font_size=20, image='power_32x32.png')
-        self.ei.set_position(0, self.row_4_y)
+        self.pi   = Component(self.ch2, self.ch2, font_size=20, image='plug1.png')
+        self.pi.set_position(8, self.row_4_y)
 
-        self.ev   = Component(56, self.ch2, font_size=18)
-        self.ev.set_position(32, self.row_4_y)
-        self.ev.set_text("{0:.3f}".format(self.day_electricity))
+        self.pv   = Component(56, self.ch2, font_size=18)
+        self.pv.set_position(32, self.row_4_y)
+        self.pv.set_text("{0:.3f}".format(self.electricity))
 
-        self.eu   = Component(40, self.ch2, font_size=16)
-        self.eu.set_position(88, self.row_4_y)
-        self.eu.set_text("kWh", 0, align=0)
+        self.pu   = Component(40, self.ch2, font_size=16)
+        self.pu.set_position(88, self.row_4_y)
+        self.pu.set_text("kWh", 0, align=0)
 
         self.separator5 = Separator(self.width, 3, bg_color=0)
         self.separator5.set_position(0, self.sep_5_y)
@@ -117,7 +117,7 @@ class Layout_2(Layout):
 
         # Euro water
         self.ewi   = Component(self.ch2, self.ch2, font_size=20, image='tap-water1.jpg')
-        self.ewi.set_position(0, self.row_5_y)
+        self.ewi.set_position(8, self.row_5_y)
 
         self.ewv   = Component(56, self.ch2, font_size=18)
         self.ewv.set_position(32, self.row_5_y)
@@ -129,7 +129,7 @@ class Layout_2(Layout):
 
         # Euro gas
         self.egi   = Component(self.ch2, self.ch2, font_size=20, image='gas_32x32.png')
-        self.egi.set_position(0, self.row_6_y)
+        self.egi.set_position(8, self.row_6_y)
         # self.egi.set_text('+', x=0, align=1)
 
         self.egv   = Component(56, self.ch2, font_size=18)
@@ -142,7 +142,7 @@ class Layout_2(Layout):
 
         # Euro electricity
         self.eei   = Component(self.ch2, self.ch2, font_size=20, image='power_32x32.png')
-        self.eei.set_position(0, self.row_7_y)
+        self.eei.set_position(8, self.row_7_y)
 
         self.eev   = Component(56, self.ch2, font_size=18)
         self.eev.set_position(32, self.row_7_y)
@@ -157,7 +157,7 @@ class Layout_2(Layout):
 
         # Euro total
         self.eti   = Component(self.ch2, self.ch2, font_size=22)
-        self.eti.set_position(0, self.row_8_y)
+        self.eti.set_position(8, self.row_8_y)
         self.eti.set_text(u'\u03A3', x=0, align=1) # Sigma
 
         self.etv   = Component(56, self.ch2, font_size=18)
@@ -171,7 +171,7 @@ class Layout_2(Layout):
         # Add components to the layout
         self.add([self.cdate, self.ctime])
         self.add([self.wi, self.wv, self.wu, self.separator2, self.gi, self.gv, self.gu, self.separator3])
-        self.add([self.pi, self.pv, self.pu, self.separator4, self.ei, self.ev, self.eu, self.separator5])
+        self.add([self.ei, self.ev, self.eu, self.separator4, self.pi, self.pv, self.pu, self.separator5])
         self.add([self.ewi, self.ewv, self.ewu, self.egi, self.egv, self.egu, self.eei, self.eev, self.eeu])
         self.add([self.separator8, self.eti, self.etv, self.etu])
 
