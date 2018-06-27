@@ -18,8 +18,7 @@ class EPD:
         if Waveshare == True:
             import epd2in13
             self.epd = epd2in13.EPD()
-#            self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
-            self.epd.init(self.epd.lut_full_update)
+            self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
             self.image_white = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)
             self.image_black = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT),   0)
             self.image_frame = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)  # 255: clear the frame
@@ -35,16 +34,12 @@ class EPD:
 
         self.components = []
 
-#        self.clear()
-        self.refresh()
-
-        self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
+        self.clear()
+#        self.refresh()
 
         if Layout != None:
             self.add(Layout.components)
             self.show()
-
-        # self.refresh() # TODO
 
 
     def add(self, component):
@@ -66,15 +61,10 @@ class EPD:
 
 
     def refresh(self):
-        self.epd.set_frame_memory(self.image_black, 0, 0)
+        self.epd.init(self.epd.lut_full_update)
         self.epd.display_frame()
-        time.sleep(2)
-
-        self.epd.set_frame_memory(self.image_white, 0, 0)
-        self.epd.display_frame()
-        time.sleep(2)
-
-        self.show()
+        self.epd.init(self.epd.lut_partial_update)
+#        self.show() # Not needed
 
 
     def refresh_NOT_OK(self):
@@ -94,10 +84,15 @@ class EPD:
         self.epd.set_frame_memory(self.image_frame, 0, 0)
 
 
+    # Almost the same as refresh()?
     def clear(self):
+        self.epd.init(self.epd.lut_full_update)
+#        self.epd.clear_frame_memory(0xFF) # TODO
         self.epd.set_frame_memory(self.image_white, 0, 0)
         self.epd.display_frame()
         self.epd.set_frame_memory(self.image_white, 0, 0)
+#        self.epd.init(self.epd.lut_partial_update)
+        self.show()
 
 
     def update(self):

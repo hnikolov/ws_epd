@@ -226,10 +226,8 @@ if __name__ == '__main__':
         L1.set_date_time()
         epd.update()
 
-#    time.sleep(2)
-    epd.clear()
-    epd.show()
-#    epd.refresh() # TODO
+#    epd.clear()
+    epd.refresh()
 
     for i in range(10):
         L1.inc_temperature(.38)
@@ -240,3 +238,4 @@ if __name__ == '__main__':
         epd.update()
 
     raw_input()
+    epd.clear()
