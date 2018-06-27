@@ -217,6 +217,8 @@ if __name__ == '__main__':
 
     # E-Paper Display instance
     epd = EPD(True, L1)
+#    epd.add( L1.components )
+#    epd.show()
 
     for i in range(10):
         L1.inc_temperature(.38)
@@ -224,9 +226,10 @@ if __name__ == '__main__':
         L1.set_date_time()
         epd.update()
 
-#    epd.clear()
-#    epd.show()
-    epd.refresh() # TODO
+#    time.sleep(2)
+    epd.clear()
+    epd.show()
+#    epd.refresh() # TODO
 
     for i in range(10):
         L1.inc_temperature(.38)

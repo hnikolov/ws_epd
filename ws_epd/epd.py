@@ -1,5 +1,7 @@
 from PIL import Image, ImageOps
 
+import time
+
 ##
  # there are 2 memory areas embedded in the e-paper display
  # and once the display is refreshed, the memory area will be auto-toggled,
@@ -16,7 +18,8 @@ class EPD:
         if Waveshare == True:
             import epd2in13
             self.epd = epd2in13.EPD()
-            self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
+#            self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
+            self.epd.init(self.epd.lut_full_update)
             self.image_white = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)
             self.image_black = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT),   0)
             self.image_frame = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)  # 255: clear the frame
@@ -34,6 +37,8 @@ class EPD:
 
 #        self.clear()
         self.refresh()
+
+        self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
 
         if Layout != None:
             self.add(Layout.components)
@@ -63,10 +68,11 @@ class EPD:
     def refresh(self):
         self.epd.set_frame_memory(self.image_black, 0, 0)
         self.epd.display_frame()
+        time.sleep(2)
 
         self.epd.set_frame_memory(self.image_white, 0, 0)
         self.epd.display_frame()
-#        self.epd.display_frame()
+        time.sleep(2)
 
         self.show()
 
