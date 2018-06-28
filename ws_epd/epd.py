@@ -91,7 +91,7 @@ class EPD:
         self.epd.set_frame_memory(self.image_white, 0, 0)
         self.epd.display_frame()
         self.epd.set_frame_memory(self.image_white, 0, 0)
-#        self.epd.init(self.epd.lut_partial_update)
+        self.epd.init(self.epd.lut_partial_update)
         self.show()
 
 
