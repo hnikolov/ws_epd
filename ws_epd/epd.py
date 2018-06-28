@@ -34,8 +34,9 @@ class EPD:
 
         self.components = []
 
-        self.clear()
-#        self.refresh()
+#        self.clear()
+        self.refresh()
+        self.refresh()
 
         if Layout != None:
             self.add(Layout.components)

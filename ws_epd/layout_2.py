@@ -177,7 +177,7 @@ class Layout_2(Layout):
 
 
     def inc_water(self, increase):
-        self.wv.color_invert()
+#        self.wv.color_invert()
         self.water += increase
         self.wv.set_text(str(self.water))
 
@@ -244,14 +244,14 @@ class Layout_2(Layout):
 #        tdate = time.strftime('%d-%b-%y')
         tdate = time.strftime('%d-%b')
         ttime = time.strftime('%H:%M')
-        
+
         if self.sdate != tdate:
             self.sdate = tdate
             self.cdate.set_text(self.sdate, align=1)
 
         if self.stime != ttime:
             self.stime = ttime
-            self.ctime.set_text(self.stime, x=4)
+            self.ctime.set_text(self.stime, x=3)
 
 
 if __name__ == '__main__':
@@ -262,7 +262,7 @@ if __name__ == '__main__':
     L2 = Layout_2()
 
     # E-Paper Display instance
-    epd = EPD(False, L2)
+    epd = EPD(True, L2)
 
 #    epd.add( L2.components )
 #    epd.refresh()
