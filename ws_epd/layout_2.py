@@ -177,6 +177,7 @@ class Layout_2(Layout):
 
 
     def inc_water(self, increase):
+        self.wv.color_invert()
         self.water += increase
         self.wv.set_text(str(self.water))
 
@@ -243,7 +244,7 @@ class Layout_2(Layout):
 #        tdate = time.strftime('%d-%b-%y')
         tdate = time.strftime('%d-%b')
         ttime = time.strftime('%H:%M')
-
+        
         if self.sdate != tdate:
             self.sdate = tdate
             self.cdate.set_text(self.sdate, align=1)

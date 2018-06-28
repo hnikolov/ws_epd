@@ -41,8 +41,7 @@ class Component(object):
                        iw = 24,       ih = 24,  image = None,  \
                        font = 'arial.ttf', font_size = 14):
 
-        self.bg        = 255 if bg_color == 255 else 0   # 0 - black, 255 - white
-        self.fg        = 0   if bg_color == 255 else 255
+        self.set_color(bg_color)
 
         self.set_width(width)
         self.set_height(height)
@@ -72,6 +71,15 @@ class Component(object):
         self.invalid   = 2 # To redraw in every frame memory
         self.borders   = False # TODO
 
+    def set_color(self, bg_color):
+        self.bg        = 255 if bg_color == 255 else 0   # 0 - black, 255 - white
+        self.fg        = 0   if bg_color == 255 else 255
+        
+    def color_invert(self):
+        self.bg        = 255 if self.bg ==   0 else 0   # 0 - black, 255 - white
+        self.fg        = 0   if self.bg == 255 else 255
+        self.invalid   = 2
+        
     def set_width(self, width):
         # x point (size and position) must be the multiple of 8 or the last 3 bits will be ignored
         self.w         = width & 0xF8
