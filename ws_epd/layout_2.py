@@ -265,7 +265,6 @@ if __name__ == '__main__':
     epd = EPD(True, L2)
 
 #    epd.add( L2.components )
-#    epd.refresh()
 #    epd.clear()
 #    epd.show()
 
@@ -275,9 +274,9 @@ if __name__ == '__main__':
         L2.set_date_time()
         epd.update()
 
-    epd.refresh() # TODO
     L2.clear_all()
-    epd.update()
+    epd.show() # TODO
+#    epd.update()
 
     for i in range(10):
         L2.inc_water(1)

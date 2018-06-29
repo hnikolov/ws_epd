@@ -38,11 +38,11 @@ class BME680(Layout):
     def __init__(self):
         super(BME680, self).__init__()
 
-        self.ch1     =  15 # component height 1
+        self.ch1     =  20 # component height 1
         self.ch2     =  24 # component height 2
         self.ch3     =  32 # component height 3
         self.sh1     =   7 # separator height 1
-
+        
         # Offsets
         self.sep_1_y = self.ch1 # after (date and time)
         self.row_1_y = self.sep_1_y + self.sh1
@@ -62,20 +62,22 @@ class BME680(Layout):
         self.pressure    = 1013.6
         self.humidity    = 46.78
         self.air_quality = 92.14
-        self.sdate       = time.strftime('%d-%b-%y')
+        self.sdate       = time.strftime('%d-%b')
         self.stime       = time.strftime('%H:%M')
 
 
         # Build the layout
-        self.c1   = Component(80, self.ch1, font_size=13, bg_color=0)
-        self.c1.set_position(0, 0)
-        self.c1.set_text(self.sdate, x=10)
+        self.cdate   = Component(72, self.ch1, font_size=18, bg_color=0)
+        self.cdate.set_position(0, 0)
+        self.cdate.set_text(self.sdate, align=1)
 
-        self.c2   = Component(48, self.ch1, font_size=13, bg_color=255)
-        self.c2.set_position(80, 0)
-        self.c2.set_text(self.stime, x=4)
-#        self.c2.draw_borders()
-    # ----------------
+        self.ctime   = Component(56, self.ch1, font_size=18, bg_color=255)
+        self.ctime.set_position(72, 0)
+        self.ctime.set_text(self.stime, x=3)
+#        self.ctime.draw_borders()
+
+        # --------------------------------------------------
+        
         self.separator1 = Separator(self.width, self.sh1, bg_color=255)
         self.separator1.set_position(0, self.sep_1_y)
 
@@ -147,10 +149,9 @@ class BME680(Layout):
         self.c12   = Component(56, 56, iw=56, ih=56, image='fan_200.png')
         self.c12.set_position(64, self.row_5_y + self.ch2, r=180)
 
-#----
-        # Add components to the layout
-#        self.add([self.c1, self.c2, self.separator1])
-        self.add([self.c1, self.c2])
+        #-- Add components to the layout --
+#        self.add([self.cdate, self.ctime, self.separator1])
+        self.add([self.cdate, self.ctime])
         self.add([self.ti, self.tv, self.tu, self.separator2, self.pi, self.pv, self.pu, self.separator3])
         self.add([self.hi, self.hv, self.hu, self.separator4, self.qi, self.qv, self.qu])
         self.add([self.separator5, self.c11, self.c12])
@@ -196,16 +197,16 @@ class BME680(Layout):
             self.qv.set_text("{0:.2f}".format(self.air_quality))
 
     def set_date_time(self):
-        tdate = time.strftime('%d-%b-%y')
+        tdate = time.strftime('%d-%b')
         ttime = time.strftime('%H:%M')
 
         if self.sdate != tdate:
             self.sdate = tdate
-            self.c1.set_text(self.sdate, x=10)
+            self.cdate.set_text(self.sdate, x=10)
 
         if self.stime != ttime:
             self.stime = ttime
-            self.c2.set_text(self.stime, x=4)
+            self.ctime.set_text(self.stime, x=4)
 
 
 if __name__ == '__main__':
@@ -227,7 +228,7 @@ if __name__ == '__main__':
         epd.update()
 
 #    epd.clear()
-    epd.refresh()
+    epd.show()
 
     for i in range(10):
         L1.inc_temperature(.38)

@@ -48,3 +48,6 @@ class EPD_2in13_MOCK:
 
         self.root.update()
         time.sleep(0.5)
+
+    def delay_ms(self, delaytime):
+        time.sleep(delaytime / 1000.0)

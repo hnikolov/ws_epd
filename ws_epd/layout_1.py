@@ -245,7 +245,7 @@ if __name__ == '__main__':
     L1 = Layout_1()
 
     # E-Paper Display instance
-    epd = EPD(False, L1)
+    epd = EPD(True, L1)
 #    epd.add(L1.components)
 #    epd.show()
 
@@ -255,9 +255,10 @@ if __name__ == '__main__':
         L1.set_date_time()
         epd.update()
 
-    epd.refresh() # TODO
+#    epd.clear()
     L1.clear_all()
-    epd.update()
+    epd.show()
+#    epd.update()
 
     for i in range(10):
         L1.inc_water(1)
