@@ -42,7 +42,7 @@ class BME680(Layout):
         self.ch2     =  24 # component height 2
         self.ch3     =  32 # component height 3
         self.sh1     =   7 # separator height 1
-        
+
         # Offsets
         self.sep_1_y = self.ch1 # after (date and time)
         self.row_1_y = self.sep_1_y + self.sh1
@@ -77,7 +77,7 @@ class BME680(Layout):
 #        self.ctime.draw_borders()
 
         # --------------------------------------------------
-        
+
         self.separator1 = Separator(self.width, self.sh1, bg_color=255)
         self.separator1.set_position(0, self.sep_1_y)
 
@@ -218,7 +218,7 @@ if __name__ == '__main__':
 
     # E-Paper Display instance
     epd = EPD(True, L1)
-#    epd.add( L1.components )
+#    epd.add( L1.components ) # To be removed
 #    epd.show()
 
     for i in range(10):
@@ -228,7 +228,7 @@ if __name__ == '__main__':
         epd.update()
 
 #    epd.clear()
-    epd.show()
+#    epd.show()
 
     for i in range(10):
         L1.inc_temperature(.38)

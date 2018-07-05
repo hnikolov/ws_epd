@@ -39,9 +39,9 @@ class Layout_2(Layout):
         self.electricity     = 0
         self.day_electricity = 12.3
 
-        self.eur_water       = 0.23
-        self.eur_gas         = 0.66
-        self.eur_electricity = 1.79
+        self.eur_water       = 0.00
+        self.eur_gas         = 0.00
+        self.eur_electricity = 0.00
         self.eur_total       = self.eur_water + self.eur_gas + self.eur_electricity
 
         # Build the layout
@@ -116,14 +116,14 @@ class Layout_2(Layout):
         # --------------------------------------------------
 
         # Euro water
-        self.ewi   = Component(self.ch2, self.ch2, font_size=20, image='tap-water1.jpg')
+        self.ewi   = Component(self.ch2, self.ch2, font_size=20, image='tap-water1.jpg', bg_color=0)
         self.ewi.set_position(8, self.row_5_y)
 
-        self.ewv   = Component(56, self.ch2, font_size=18)
+        self.ewv   = Component(56, self.ch2, font_size=18, bg_color=0)
         self.ewv.set_position(32, self.row_5_y)
         self.ewv.set_text("{0:.2f}".format(self.eur_water))
 
-        self.ewu   = Component(40, self.ch2, font_size=16)
+        self.ewu   = Component(40, self.ch2, font_size=16, bg_color=0)
         self.ewu.set_position(88, self.row_5_y)
         self.ewu.set_text(u'\u20AC', x=0, align=0) # Euro
 
@@ -132,11 +132,11 @@ class Layout_2(Layout):
         self.egi.set_position(8, self.row_6_y)
         # self.egi.set_text('+', x=0, align=1)
 
-        self.egv   = Component(56, self.ch2, font_size=18)
+        self.egv   = Component(56, self.ch2, font_size=18, bg_color=0)
         self.egv.set_position(32, self.row_6_y)
         self.egv.set_text("{0:.2f}".format(self.eur_gas))
 
-        self.egu   = Component(40, self.ch2, font_size=16)
+        self.egu   = Component(40, self.ch2, font_size=16, bg_color=0)
         self.egu.set_position(88, self.row_6_y)
         self.egu.set_text(u'\u20AC', x=0, align=0) # Euro
 
@@ -144,13 +144,13 @@ class Layout_2(Layout):
         self.eei   = Component(self.ch2, self.ch2, font_size=20, image='power_32x32.png')
         self.eei.set_position(8, self.row_7_y)
 
-        self.eev   = Component(56, self.ch2, font_size=18)
+        self.eev   = Component(56, self.ch2, font_size=18, bg_color=0)
         self.eev.set_position(32, self.row_7_y)
         self.eev.set_text("{0:.2f}".format(self.eur_electricity))
 
-        self.eeu   = Component(40, self.ch2, font_size=16)
+        self.eeu   = Component(40, self.ch2, font_size=16, bg_color=0)
         self.eeu.set_position(88, self.row_7_y)
-        self.eeu.set_text(u'\u20AC', x=0, align=0) # Euro 
+        self.eeu.set_text(u'\u20AC', x=0, align=0) # Euro
 
         self.separator8 = Separator(self.width, 3, bg_color=255, x2=96)
         self.separator8.set_position(0, self.sep_8_y)
@@ -274,6 +274,8 @@ if __name__ == '__main__':
         L2.set_date_time()
         epd.update()
 
+#    epd.clear()
+#    epd.clear()
     L2.clear_all()
     epd.show() # TODO
 #    epd.update()
@@ -283,5 +285,3 @@ if __name__ == '__main__':
         L2.inc_gas(0.01)
         L2.set_date_time()
         epd.update()
-
-    raw_input()

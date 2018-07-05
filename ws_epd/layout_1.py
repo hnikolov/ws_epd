@@ -266,7 +266,7 @@ if __name__ == '__main__':
         L1.set_date_time()
         epd.update()
 
-    raw_input()
+#    raw_input()
 
 #    for k,v in icons_list.iteritems():
 #        print k, hex(ord(v)) #, unichr(ord(v))

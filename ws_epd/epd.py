@@ -1,4 +1,4 @@
-from PIL import Image, ImageOps
+from PIL import Image,ImageDraw, ImageOps
 
 import time
 
@@ -33,14 +33,16 @@ class EPD:
             self.image_frame = Image.new('1', (128, 250), 255)  # 255: clear the frame
             self.image_invrt = Image.new('1', (128, 250),   0)
 
-        self.clear()
+#        self.clear()
 
         self.components = []
 
         if Layout != None:
             self.add(Layout.components)
-            self.show()
+#            self.show()
 
+        self.clear_bad()
+        self.clear()
 
     def add(self, component):
         if isinstance(component, (list,)):
@@ -49,24 +51,48 @@ class EPD:
             self.components.append( component )
 
 
-    def clear(self): # Clear
-        self.epd.init(self.epd.lut_full_update)    
-        self.epd.clear_frame_memory(0xFF)
-        self.epd.set_frame_memory(self.image_white, 0, 0)
+    def clear(self):
+        self.epd.init(self.epd.lut_full_update)
+        self.show()
+        self.epd.init(self.epd.lut_partial_update)
+
+    def clear_bad(self):
+        self.epd.init(self.epd.lut_full_update)
+
+        draw_white  = ImageDraw.Draw(self.image_white)
+        draw_white.rectangle((0, 134, 128, 250), fill = 0)
+#        draw_white.rectangle((8, 0, 128, 5), fill = 0)
+#        draw_white.rectangle((8, 125, 128, 130), fill = 0)
+#        draw_white.rectangle((8, 247, 128, 130), fill = 0)
+
+        draw_black  = ImageDraw.Draw(self.image_black)
+        draw_black.rectangle((32, 20, 120, 220), fill = 255)
+#        draw_white.rectangle((8, 0, 128, 5), fill = 255)
+#        draw_white.rectangle((8, 125, 128, 130), fill = 255)
+#        draw_white.rectangle((8, 247, 128, 130), fill = 255)
+
+        self.epd.clear_frame_memory(0x00)
+        self.epd.set_frame_memory(self.image_black, 0, 0)
         self.epd.display_frame()
-        self.epd.delay_ms(2000)    # TODO: is this needed?
+
+        self.epd.clear_frame_memory(0x0)
+        self.epd.set_frame_memory(self.image_black, 0, 0)
+        self.epd.display_frame()
+
+#        self.epd.clear_frame_memory(0xFF)
+#        self.epd.set_frame_memory(self.image_white, 0, 0)
+#        self.epd.display_frame()
+
+#        self.epd.clear_frame_memory(0xFF)
+#        self.epd.set_frame_memory(self.image_white, 0, 0)
+#        self.epd.display_frame()
+
         self.epd.init(self.epd.lut_partial_update)
 
 
     def show(self):
-        """ Clear and show in full update mode
+        """ Show in partial update mode
         """
-        self.epd.init(self.epd.lut_full_update)    
-        self.epd.clear_frame_memory(0xFF)
-        self.epd.set_frame_memory(self.image_white, 0, 0)
-        self.epd.display_frame()
-        self.epd.delay_ms(1000)    # TODO: is this needed?
-        
         if len(self.components) == 0: return
         for c in self.components:
             self.image_frame.paste(c.image, (c.x, c.y))
@@ -74,12 +100,8 @@ class EPD:
 
         self.epd.set_frame_memory(self.image_frame, 0, 0)
         self.epd.display_frame()
-        self.epd.delay_ms(1000)    # TODO: is this needed?
-        self.epd.init(self.epd.lut_partial_update)
-
-#        self.epd.set_frame_memory(self.image_frame, 0, 0)
-#        self.epd.display_frame()
-#        self.epd.set_frame_memory(self.image_frame, 0, 0)
+        self.epd.set_frame_memory(self.image_frame, 0, 0)
+        self.epd.display_frame()
 
 
     def update(self):
@@ -92,7 +114,7 @@ class EPD:
 #                self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
                 c.invalid -= 1
         self.epd.display_frame()
-        
+
         # TODO landscape: self.epd.set_frame_memory(c.image.transpose(Image.ROTATE_270), c.x, c.y)
 
 
