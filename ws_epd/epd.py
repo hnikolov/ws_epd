@@ -42,6 +42,9 @@ class EPD:
         self.clear_bad()
         self.clear()
 
+    def delay_time(self):
+        time.sleep(3)
+
     def add(self, component):
         if isinstance(component, (list,)):
             self.components.extend( component )
@@ -51,39 +54,50 @@ class EPD:
 
     def clear(self):
         self.epd.init(self.epd.lut_full_update)
-        self.show()
+        self.show(delay=True)
         self.epd.init(self.epd.lut_partial_update)
 
     def clear_bad(self):
         self.epd.init(self.epd.lut_full_update)
 
         draw_white  = ImageDraw.Draw(self.image_white)
-        draw_white.rectangle((0, 134, 128, 250), fill = 0)
-#        draw_white.rectangle((32, 20, 120, 220), fill = 0)
+#        draw_white.rectangle((8, 8, 112, 242), fill = 0)
+#        draw_white.rectangle((40, 40, 80, 202), fill = 0)
+
+#        draw_white.rectangle((0, 134, 128, 250), fill = 0)
+        draw_white.rectangle((32, 20, 120, 220), fill = 0)
+#        draw_white.rectangle((0, 0, 128, 250), fill = 0)
 
         draw_black  = ImageDraw.Draw(self.image_black)
+#       draw_black.rectangle((8, 8, 112, 242), fill = 255)
+#        draw_black.rectangle((40, 40, 80, 202), fill = 255)
         draw_black.rectangle((32, 20, 120, 220), fill = 255)
+#        draw_black.rectangle((0, 0, 128, 250), fill = 255)
 
         self.epd.clear_frame_memory(0x00)
         self.epd.set_frame_memory(self.image_black, 0, 0)
         self.epd.display_frame()
+        self.delay_time()
 
-        self.epd.clear_frame_memory(0x0)
-        self.epd.set_frame_memory(self.image_black, 0, 0)
+        self.epd.clear_frame_memory(0xFF)
+        self.epd.set_frame_memory(self.image_white, 0, 0)
         self.epd.display_frame()
+        self.delay_time()
+
+#        self.epd.clear_frame_memory(0x0)
+#        self.epd.set_frame_memory(self.image_black, 0, 0)
+#        self.epd.display_frame()
+#        self.delay_time()
 
 #        self.epd.clear_frame_memory(0xFF)
 #        self.epd.set_frame_memory(self.image_white, 0, 0)
 #        self.epd.display_frame()
-
-#        self.epd.clear_frame_memory(0xFF)
-#        self.epd.set_frame_memory(self.image_white, 0, 0)
-#        self.epd.display_frame()
+#        self.delay_time()
 
         self.epd.init(self.epd.lut_partial_update)
 
 
-    def show(self):
+    def show(self, delay=None):
         """ Show in partial update mode
         """
         if len(self.components) == 0: return
@@ -93,8 +107,12 @@ class EPD:
 
         self.epd.set_frame_memory(self.image_frame, 0, 0)
         self.epd.display_frame()
+        if delay != None:
+            self.delay_time()
         self.epd.set_frame_memory(self.image_frame, 0, 0)
         self.epd.display_frame()
+        if delay != None:
+            self.delay_time()
 
 
     def update(self):

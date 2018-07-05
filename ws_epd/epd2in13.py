@@ -127,8 +127,8 @@ class EPD:
 
     def wait_until_idle(self):
         while(self.digital_read(self.busy_pin) == 1):      # 0: idle, 1: busy
-#            self.delay_ms(100)
-            self.delay_ms(10)
+            self.delay_ms(100)
+#            self.delay_ms(10)
 ##
  #  @brief: module reset.
  #          often used to awaken the module in deep sleep,
