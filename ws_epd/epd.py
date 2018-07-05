@@ -33,8 +33,6 @@ class EPD:
             self.image_frame = Image.new('1', (128, 250), 255)  # 255: clear the frame
             self.image_invrt = Image.new('1', (128, 250),   0)
 
-#        self.clear()
-
         self.components = []
 
         if Layout != None:
@@ -61,15 +59,10 @@ class EPD:
 
         draw_white  = ImageDraw.Draw(self.image_white)
         draw_white.rectangle((0, 134, 128, 250), fill = 0)
-#        draw_white.rectangle((8, 0, 128, 5), fill = 0)
-#        draw_white.rectangle((8, 125, 128, 130), fill = 0)
-#        draw_white.rectangle((8, 247, 128, 130), fill = 0)
+#        draw_white.rectangle((32, 20, 120, 220), fill = 0)
 
         draw_black  = ImageDraw.Draw(self.image_black)
         draw_black.rectangle((32, 20, 120, 220), fill = 255)
-#        draw_white.rectangle((8, 0, 128, 5), fill = 255)
-#        draw_white.rectangle((8, 125, 128, 130), fill = 255)
-#        draw_white.rectangle((8, 247, 128, 130), fill = 255)
 
         self.epd.clear_frame_memory(0x00)
         self.epd.set_frame_memory(self.image_black, 0, 0)
