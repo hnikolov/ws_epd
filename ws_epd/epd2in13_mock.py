@@ -18,6 +18,7 @@ class EPD_2in13_MOCK:
 
         # The mock-up part
         self.root = Tkinter.Tk()
+#        self.root.overrideredirect(True) # No title bar, no resizing, no possibilities of managing the window
         self.root.bind("<Button>", button_click_exit_mainloop) # unblock mainloop()
         self.root.geometry('%dx%d' % (self.w, self.h))
         self.tkpi        = ImageTk.PhotoImage(self.image)
