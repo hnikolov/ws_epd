@@ -1,4 +1,4 @@
-from PIL import Image,ImageDraw, ImageOps
+from PIL import Image, ImageDraw
 
 import time
 
@@ -14,37 +14,25 @@ class EPD:
     """ Waveshare 2.13 inch e-paper screen with partial update support
         w = 128, h = 250; usable resolution: 122 x 250
         x point (size and position) must be the multiple of 8 or the last 3 bits will be ignored
+        self.image_frame = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)  # 255: clear the frame
     """
     def __init__(self, Waveshare = True, Layout = None):
         if Waveshare == True:
             import epd2in13
             self.epd = epd2in13.EPD()
-#            self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
-            self.image_white = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)
-            self.image_black = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT),   0)
-            self.image_frame = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)  # 255: clear the frame
-            self.image_invrt = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT),   0)
         else:
             import epd2in13_mock
             self.epd = epd2in13_mock.EPD_2in13_MOCK()
-#            self.epd.init(self.epd.lut_partial_update) # or epd.lut_full_update
-            self.image_white = Image.new('1', (128, 250), 255)
-            self.image_black = Image.new('1', (128, 250),   0)
-            self.image_frame = Image.new('1', (128, 250), 255)  # 255: clear the frame
-            self.image_invrt = Image.new('1', (128, 250),   0)
 
-        self.components = []
+        self.image_frame = Image.new('1', (128, 250), 255)  # 255: clear the frame
+        self.components  = []
 
         if Layout != None:
             self.add(Layout.components)
-#            self.show()
 
-        self.clear_bad()
-        self.clear_exp()
-        self.clear()
+        # display and switch to partial update mode
+        self.display_image_full_update()
 
-    def delay_time(self):
-        time.sleep(3)
 
     def add(self, component):
         if isinstance(component, (list,)):
@@ -52,97 +40,33 @@ class EPD:
         else:
             self.components.append( component )
 
-    def clear_exp(self):
-        self.epd.init(self.epd.lut_full_update)
-        image = Image.new('1', (128, 250), 255)
-        draw  = ImageDraw.Draw(image)
-#        draw.rectangle((0, 134, 128, 250), fill = 0)
 
-        y = 100
-        for i in range(5):
-#            draw.rectangle((0, y, 128, 250), fill = 0)
-            draw.rectangle((0, 0, 72, 20), fill = 0)
-            draw.rectangle((40, 134, 128, 220), fill = 0)
+    def get_image_frame(self):
+        if len(self.components) != 0:       
+            for c in self.components:
+                self.image_frame.paste(c.image, (c.x, c.y))
+                c.invalid = 0
+            
+        return self.epd.get_frame_buffer(self.image_frame) # Do we need to use epd.get_frame_buffer()?
 
-            self.epd.clear_frame_memory(0xFF)
-            self.epd.set_frame_memory(image, 0, 0)
-            self.epd.display_frame()
-            self.delay_time()
 
-            self.epd.clear_frame_memory(0xFF)
-            self.epd.set_frame_memory(image, 0, 0)
-            self.epd.display_frame()
-            self.delay_time()
-
-            y -= 20
-            break
-
-        self.epd.init(self.epd.lut_partial_update)
-
-    def clear(self):
-        self.epd.init(self.epd.lut_full_update)
-        self.show(delay=True)
-        self.epd.init(self.epd.lut_partial_update)
-
-    def clear_bad(self):
-        self.epd.init(self.epd.lut_full_update)
-
-        image_white = Image.new('1', (128, 250), 255)
-        image_black = Image.new('1', (128, 250),   0)
-
-        draw_white  = ImageDraw.Draw(image_white)
-#        draw_white.rectangle((8, 8, 112, 242), fill = 0)
-#        draw_white.rectangle((40, 40, 80, 202), fill = 0)
-
-#        draw_white.rectangle((0, 134, 128, 250), fill = 0)
-        draw_white.rectangle((32, 20, 120, 220), fill = 0)
-#        draw_white.rectangle((0, 0, 128, 250), fill = 0)
-
-        draw_black  = ImageDraw.Draw(image_black)
-#       draw_black.rectangle((8, 8, 112, 242), fill = 255)
-#        draw_black.rectangle((40, 40, 80, 202), fill = 255)
-        draw_black.rectangle((32, 20, 120, 220), fill = 255)
-#        draw_black.rectangle((0, 0, 128, 250), fill = 255)
-
-        self.epd.clear_frame_memory(0x00)
-        self.epd.set_frame_memory(image_black, 0, 0)
+    def display(self, image, fmode = False):
+        if fmode == True: self.epd.clear_frame_memory(0xFF)
+        self.epd.set_frame_memory(image, 0, 0)
         self.epd.display_frame()
-        self.delay_time()
-
-        self.epd.clear_frame_memory(0xFF)
-        self.epd.set_frame_memory(image_white, 0, 0)
-        self.epd.display_frame()
-        self.delay_time()
-
-#        self.epd.clear_frame_memory(0x0)
-#        self.epd.set_frame_memory(image_black, 0, 0)
-#        self.epd.display_frame()
-#        self.delay_time()
-
-#        self.epd.clear_frame_memory(0xFF)
-#        self.epd.set_frame_memory(image_white, 0, 0)
-#        self.epd.display_frame()
-#        self.delay_time()
-
+        if fmode != True: time.sleep(2) # Do we need this?
+        
+        
+    def display_image_full_update(self):
+        self.epd.init(self.epd.lut_full_update)       
+        self.show(fmode = True)
         self.epd.init(self.epd.lut_partial_update)
 
 
-    def show(self, delay=None):
-        """ Show in partial update mode
-        """
-        if len(self.components) == 0: return
-        for c in self.components:
-            self.image_frame.paste(c.image, (c.x, c.y))
-            c.invalid = 0
-
-        self.epd.set_frame_memory(self.image_frame, 0, 0)
-        self.epd.display_frame()
-        if delay != None:
-            self.delay_time()
-        self.epd.set_frame_memory(self.image_frame, 0, 0)
-        self.epd.display_frame()
-        if delay != None:
-            self.delay_time()
+    def show(self, fmode = False):
+        image_frame = self.get_image_frame()
+        self.display(image_frame, fmode = fmode)
+        self.display(image_frame, fmode = fmode)
 
 
     def update(self):
@@ -152,25 +76,8 @@ class EPD:
         for c in self.components:
             if c.invalid != 0:
                 self.epd.set_frame_memory(c.image, c.x, c.y)
-#                self.epd.set_frame_memory(c.image.rotate(c.rot), c.x, c.y)
                 c.invalid -= 1
         self.epd.display_frame()
 
         # TODO landscape: self.epd.set_frame_memory(c.image.transpose(Image.ROTATE_270), c.x, c.y)
-
-
-    def refresh_NOT_OK(self):
-        for c in self.components:
-            self.image_frame.paste(c.image.rotate(c.rot), (c.x, c.y))
-            c.invalid = 0
-
-        self.image_invrt = self.image_frame.convert('L')
-        self.image_invrt = ImageOps.invert(self.image_invrt)
-        self.image_invrt = self.image_invrt.convert('1')
-
-        self.epd.set_frame_memory(self.image_invrt, 0, 0)
-        self.epd.display_frame()
-
-        self.epd.set_frame_memory(self.image_frame, 0, 0)
-        self.epd.display_frame()
-        self.epd.set_frame_memory(self.image_frame, 0, 0)
+     
