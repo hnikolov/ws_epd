@@ -40,6 +40,7 @@ class EPD:
 #            self.show()
 
         self.clear_bad()
+        self.clear_exp()
         self.clear()
 
     def delay_time(self):
@@ -51,6 +52,32 @@ class EPD:
         else:
             self.components.append( component )
 
+    def clear_exp(self):
+        self.epd.init(self.epd.lut_full_update)
+        image = Image.new('1', (128, 250), 255)
+        draw  = ImageDraw.Draw(image)
+#        draw.rectangle((0, 134, 128, 250), fill = 0)
+
+        y = 100
+        for i in range(5):
+#            draw.rectangle((0, y, 128, 250), fill = 0)
+            draw.rectangle((0, 0, 72, 20), fill = 0)
+            draw.rectangle((40, 134, 128, 220), fill = 0)
+
+            self.epd.clear_frame_memory(0xFF)
+            self.epd.set_frame_memory(image, 0, 0)
+            self.epd.display_frame()
+            self.delay_time()
+
+            self.epd.clear_frame_memory(0xFF)
+            self.epd.set_frame_memory(image, 0, 0)
+            self.epd.display_frame()
+            self.delay_time()
+
+            y -= 20
+            break
+
+        self.epd.init(self.epd.lut_partial_update)
 
     def clear(self):
         self.epd.init(self.epd.lut_full_update)
@@ -60,7 +87,10 @@ class EPD:
     def clear_bad(self):
         self.epd.init(self.epd.lut_full_update)
 
-        draw_white  = ImageDraw.Draw(self.image_white)
+        image_white = Image.new('1', (128, 250), 255)
+        image_black = Image.new('1', (128, 250),   0)
+
+        draw_white  = ImageDraw.Draw(image_white)
 #        draw_white.rectangle((8, 8, 112, 242), fill = 0)
 #        draw_white.rectangle((40, 40, 80, 202), fill = 0)
 
@@ -68,29 +98,29 @@ class EPD:
         draw_white.rectangle((32, 20, 120, 220), fill = 0)
 #        draw_white.rectangle((0, 0, 128, 250), fill = 0)
 
-        draw_black  = ImageDraw.Draw(self.image_black)
+        draw_black  = ImageDraw.Draw(image_black)
 #       draw_black.rectangle((8, 8, 112, 242), fill = 255)
 #        draw_black.rectangle((40, 40, 80, 202), fill = 255)
         draw_black.rectangle((32, 20, 120, 220), fill = 255)
 #        draw_black.rectangle((0, 0, 128, 250), fill = 255)
 
         self.epd.clear_frame_memory(0x00)
-        self.epd.set_frame_memory(self.image_black, 0, 0)
+        self.epd.set_frame_memory(image_black, 0, 0)
         self.epd.display_frame()
         self.delay_time()
 
         self.epd.clear_frame_memory(0xFF)
-        self.epd.set_frame_memory(self.image_white, 0, 0)
+        self.epd.set_frame_memory(image_white, 0, 0)
         self.epd.display_frame()
         self.delay_time()
 
 #        self.epd.clear_frame_memory(0x0)
-#        self.epd.set_frame_memory(self.image_black, 0, 0)
+#        self.epd.set_frame_memory(image_black, 0, 0)
 #        self.epd.display_frame()
 #        self.delay_time()
 
 #        self.epd.clear_frame_memory(0xFF)
-#        self.epd.set_frame_memory(self.image_white, 0, 0)
+#        self.epd.set_frame_memory(image_white, 0, 0)
 #        self.epd.display_frame()
 #        self.delay_time()
 
