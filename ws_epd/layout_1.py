@@ -246,21 +246,17 @@ if __name__ == '__main__':
 
     # E-Paper Display instance
     epd = EPD(True, L1)
-#    epd.add(L1.components)
-#    epd.show()
 
-    for i in range(10):
+    for i in range(5):
         L1.inc_water(1)
         L1.inc_gas(0.01)
         L1.set_date_time()
         epd.update()
 
-#    epd.clear()
     L1.clear_all()
     epd.show()
-#    epd.update()
 
-    for i in range(10):
+    for i in range(5):
         L1.inc_water(1)
         L1.inc_gas(0.01)
         L1.set_date_time()

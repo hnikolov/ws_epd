@@ -218,19 +218,14 @@ if __name__ == '__main__':
 
     # E-Paper Display instance
     epd = EPD(True, L1)
-#    epd.add( L1.components ) # To be removed
-#    epd.show()
 
-    for i in range(10):
+    for i in range(5):
         L1.inc_temperature(.38)
         L1.inc_pressure(0.06)
         L1.set_date_time()
         epd.update()
 
-#    epd.clear()
-#    epd.show()
-
-    for i in range(10):
+    for i in range(5):
         L1.inc_temperature(.38)
         L1.inc_pressure(0.06)
         L1.inc_humidity(.25)
@@ -239,4 +234,3 @@ if __name__ == '__main__':
         epd.update()
 
     raw_input()
-    epd.clear()
