@@ -119,11 +119,11 @@ class Layout_2(Layout):
         self.ewi   = Component(self.ch2, self.ch2, font_size=20, image='tap-water1.jpg')
         self.ewi.set_position(8, self.row_5_y)
 
-        self.ewv   = Component(56, self.ch2, font_size=18, bg_color=0)
+        self.ewv   = Component(56, self.ch2, font_size=18, bg_color=255)
         self.ewv.set_position(40, self.row_5_y)
         self.ewv.set_text("{0:.2f}".format(self.eur_water))
 
-        self.ewu   = Component(32, self.ch2, font_size=16, bg_color=0)
+        self.ewu   = Component(32, self.ch2, font_size=16, bg_color=255)
         self.ewu.set_position(96, self.row_5_y)
         self.ewu.set_text(u'\u20AC', x=0, align=0) # Euro
 
@@ -132,11 +132,11 @@ class Layout_2(Layout):
         self.egi.set_position(8, self.row_6_y)
         # self.egi.set_text('+', x=0, align=1)
 
-        self.egv   = Component(56, self.ch2, font_size=18, bg_color=0)
+        self.egv   = Component(56, self.ch2, font_size=18, bg_color=255)
         self.egv.set_position(40, self.row_6_y)
         self.egv.set_text("{0:.2f}".format(self.eur_gas))
 
-        self.egu   = Component(32, self.ch2, font_size=16, bg_color=0)
+        self.egu   = Component(32, self.ch2, font_size=16, bg_color=255)
         self.egu.set_position(96, self.row_6_y)
         self.egu.set_text(u'\u20AC', x=0, align=0) # Euro
 
@@ -144,13 +144,13 @@ class Layout_2(Layout):
         self.eei   = Component(self.ch2, self.ch2, font_size=20, image='power_32x32.png')
         self.eei.set_position(8, self.row_7_y)
 
-        self.eev   = Component(56, self.ch2, font_size=18, bg_color=0)
+        self.eev   = Component(56, self.ch2, font_size=18, bg_color=255)
         self.eev.set_position(40, self.row_7_y)
         self.eev.set_text("{0:.2f}".format(self.eur_electricity))
 
-        self.eeu   = Component(32, self.ch2, font_size=16, bg_color=0)
+        self.eeu   = Component(32, self.ch2, font_size=16, bg_color=255)
         self.eeu.set_position(96, self.row_7_y)
-        self.eeu.set_text(u'\u20AC', x=0, align=0) # Euro 
+        self.eeu.set_text(u'\u20AC', x=0, align=0) # Euro
 
         self.separator8 = Separator(self.width, height=3, bg_color=255, x1=40, x2=104)
         self.separator8.set_position(0, self.sep_8_y)
@@ -264,7 +264,7 @@ if __name__ == '__main__':
     # E-Paper Display instance
     epd = EPD(True, L2)
 
-    for i in range(10):
+    for i in range(5):
         L2.inc_water(1)
         L2.inc_gas(0.01)
         L2.set_date_time()
@@ -273,7 +273,7 @@ if __name__ == '__main__':
     L2.clear_all()
     epd.show()
 
-    for i in range(10):
+    for i in range(5):
         L2.inc_water(1)
         L2.inc_gas(0.01)
         L2.set_date_time()

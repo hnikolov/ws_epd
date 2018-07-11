@@ -42,23 +42,25 @@ class EPD:
 
 
     def get_image_frame(self):
-        if len(self.components) != 0:       
+        if len(self.components) != 0:
             for c in self.components:
                 self.image_frame.paste(c.image, (c.x, c.y))
                 c.invalid = 0
-            
-        return self.epd.get_frame_buffer(self.image_frame) # Do we need to use epd.get_frame_buffer()?
+
+#        return self.epd.get_frame_buffer(self.image_frame) # Do we need to use epd.get_frame_buffer()?
+        return self.image_frame
 
 
     def display(self, image, fmode = False):
-        if fmode == True: self.epd.clear_frame_memory(0xFF)
+#        if fmode == True: 
+        self.epd.clear_frame_memory(0xFF)
         self.epd.set_frame_memory(image, 0, 0)
         self.epd.display_frame()
-        if fmode != True: time.sleep(2) # Do we need this?
-        
-        
+#        if fmode != True: time.sleep(2) # Do we need this?
+
+
     def display_image_full_update(self):
-        self.epd.init(self.epd.lut_full_update)       
+        self.epd.init(self.epd.lut_full_update)
         self.show(fmode = True)
         self.epd.init(self.epd.lut_partial_update)
 
@@ -80,4 +82,4 @@ class EPD:
         self.epd.display_frame()
 
         # TODO landscape: self.epd.set_frame_memory(c.image.transpose(Image.ROTATE_270), c.x, c.y)
-     
+
