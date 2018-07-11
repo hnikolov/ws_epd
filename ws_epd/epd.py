@@ -58,7 +58,7 @@ class EPD:
 
     def display_image_full_update(self):
         self.epd.init(self.epd.lut_full_update)
-        self.show(fmode = True)
+        self.show()
         self.epd.init(self.epd.lut_partial_update)
 
 
