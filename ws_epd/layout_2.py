@@ -34,14 +34,14 @@ class Layout_2(Layout):
         self.stime           = time.strftime('%H:%M')
 
         # Random values for test
-        self.water           = 890
-        self.gas             = 2.64
+        self.water           = 0
+        self.gas             = 0.0
         self.electricity     = 0
-        self.day_electricity = 12.3
+        self.day_electricity = 0.0
 
-        self.eur_water       = 0.23
-        self.eur_gas         = 0.66
-        self.eur_electricity = 1.79
+        self.eur_water       = 0.0
+        self.eur_gas         = 0.0
+        self.eur_electricity = 1.0
         self.eur_total       = self.eur_water + self.eur_gas + self.eur_electricity
 
         # Build the layout
@@ -263,6 +263,17 @@ if __name__ == '__main__':
 
     # E-Paper Display instance
     epd = EPD(True, L2)
+    
+    # Random values for test
+    L2.water           = 890
+    L2.gas             = 2.64
+    L2.electricity     = 0
+    L2.day_electricity = 12.3
+
+    L2.eur_water       = 0.23
+    L2.eur_gas         = 0.66
+    L2.eur_electricity = 1.79
+    L2.eur_total       = L2.eur_water + L2.eur_gas + L2.eur_electricity
 
     for i in range(5):
         L2.inc_water(1)
