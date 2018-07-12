@@ -109,7 +109,7 @@ class Layout_2(Layout):
 
         self.pu   = Component(32, self.ch2, font_size=16)
         self.pu.set_position(96, self.row_4_y)
-        self.pu.set_text("kW", 0, align=0)
+        self.pu.set_text("/ h", 0, align=0)
 
         self.separator5 = Separator(self.width, 3, bg_color=0)
         self.separator5.set_position(0, self.sep_5_y)
@@ -262,7 +262,7 @@ if __name__ == '__main__':
     L2 = Layout_2()
 
     # E-Paper Display instance
-    epd = EPD(True, L2)
+    epd = EPD(False, L2)
     
     # Random values for test
     L2.water           = 890
