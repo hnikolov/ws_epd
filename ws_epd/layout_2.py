@@ -210,6 +210,10 @@ class Layout_2(Layout):
             self.electricity = value
             self.pv.set_text("{0:.3f}".format(self.electricity))
 
+    def inc_electricity(self, increase):
+        self.electricity += increase
+        self.pv.set_text("{0:.3f}".format(self.electricity))
+
     def inc_day_electricity(self, increase):
         self.day_electricity += increase
         self.ev.set_text("{0:.3f}".format(self.day_electricity))
