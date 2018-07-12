@@ -152,3 +152,41 @@ class Separator(Component):
     def __init__(self, width, height, bg_color = 255, x1=32, x2=48, image = None):
         super(Separator, self).__init__(width, height, font_size=3, bg_color=bg_color, image=image)
         self.draw.line((x1, height/2, x2, height/2), fill=self.fg)
+
+
+# Currently, 24 bars graph in 122 pixels, 5 pixels per bar, including separation
+class BarGraph(Component):
+    def __init__(self, width, height, bg_color = 255, image = None):
+        super(BarGraph, self).__init__(width, height, font_size=3, bg_color=bg_color, image=image)
+        
+        self.nbars = 24
+        self.bars  = [0 for _ in range(self.nbars)]
+        self.draw_lines()
+    
+    def draw_lines(self):
+        self.draw.line((0, self.h/2, self.w, self.h/2), fill=self.fg) # Middle
+        self.draw.line((0, self.h-1, self.w, self.h-1), fill=self.fg) # Bottom
+    
+    def clear_bars(self):
+        self.bars    = [0 for _ in range(self.nbars)]
+        self.invalid = 2
+        
+    def set_bar(self, position, value):
+        if position > self.nbars-1:
+            print "Wrong position:", position, "Set to 0"
+            position = 0
+            
+        if value > self.h:
+            print "Value too large:", value, "Set to", self.h
+            value = self.h
+            
+        self.bars[position] = value
+        self.update()
+        
+    def update(self):
+        self.clear()
+        self.draw_lines()
+        for i, h in enumerate(self.bars):
+            offset = 2 + (5 * i)
+            self.draw.rectangle((offset, self.h-h-1, offset+2, self.h-1), fill=self.fg)
+        self.invalid = 2

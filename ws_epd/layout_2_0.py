@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 from layout import Layout
-from component import Component, Separator, BarGraph
+from component import Component, Separator
 
 class Layout_2(Layout):
     def __init__(self):
@@ -13,21 +13,21 @@ class Layout_2(Layout):
 
         # Offsets
         self.sep_1_y = self.ch1 # after (date and time)
-        self.row_1_y = self.sep_1_y + self.sh1 + 1
+        self.row_1_y = self.sep_1_y + self.sh1 + 2
         self.sep_2_y = self.row_1_y + self.ch2
         self.row_2_y = self.sep_2_y + self.sh1
         self.sep_3_y = self.row_2_y + self.ch2
         self.row_3_y = self.sep_3_y + self.sh1
         self.sep_4_y = self.row_3_y + self.ch2
         self.row_4_y = self.sep_4_y + self.sh1
-        self.sep_5_y = self.row_4_y + self.ch2 
-        self.row_5_y = self.sep_5_y + self.sh1 + 18
-        self.sep_6_y = self.row_5_y + self.ch2 - 1
-        self.row_6_y = self.sep_6_y + self.sh1 - 1
-        self.sep_7_y = self.row_6_y + self.ch2 - 1
-        self.row_7_y = self.sep_7_y + self.sh1 - 1
-        self.sep_8_y = self.row_7_y + self.ch2 - 1
-        self.row_8_y = self.sep_8_y + self.sh1 - 1
+        self.sep_5_y = self.row_4_y + self.ch2 + 4
+        self.row_5_y = self.sep_5_y + self.sh1 + 4
+        self.sep_6_y = self.row_5_y + self.ch2
+        self.row_6_y = self.sep_6_y + self.sh1
+        self.sep_7_y = self.row_6_y + self.ch2
+        self.row_7_y = self.sep_7_y + self.sh1
+        self.sep_8_y = self.row_7_y + self.ch2
+        self.row_8_y = self.sep_8_y + self.sh1
 
 #        self.sdate           = time.strftime('%d-%b-%y')
         self.sdate           = time.strftime('%d-%b')
@@ -111,11 +111,8 @@ class Layout_2(Layout):
         self.pu.set_position(96, self.row_4_y)
         self.pu.set_text("/ h", 0, align=0)
 
-        self.separator5   = BarGraph(128, 18, bg_color=255)
+        self.separator5 = Separator(self.width, 3, bg_color=0)
         self.separator5.set_position(0, self.sep_5_y)
-        self.separator5.update()
-        #self.separator5 = Separator(self.width, 3, bg_color=0)
-        #self.separator5.set_position(0, self.sep_5_y)
         # --------------------------------------------------
 
         # Euro water
@@ -245,7 +242,6 @@ class Layout_2(Layout):
         self.set_eur_gas(0)
         self.set_eur_electricity(0)
         self.set_eur_total(0)
-        self.separator5.clear_bars()
 
 
     def set_date_time(self):
@@ -283,27 +279,19 @@ if __name__ == '__main__':
     L2.eur_electricity = 1.79
     L2.eur_total       = L2.eur_water + L2.eur_gas + L2.eur_electricity
 
-    for i in range(18):
-        L2.separator5.set_bar(i,i+1)
-    
-    L2.separator5.set_bar(23,19.0)
-        
     for i in range(5):
         L2.inc_water(1)
         L2.inc_gas(0.01)
         L2.set_date_time()
-        L2.separator5.set_bar(18+i, 18 - 2*(i+1))
         epd.update()
 
     L2.clear_all()
     epd.show()
 
-        
     for i in range(5):
         L2.inc_water(1)
         L2.inc_gas(0.01)
         L2.set_date_time()
-        L2.separator5.set_bar(i, 2*(i+1))
         epd.update()
 
     raw_input()
