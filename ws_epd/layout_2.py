@@ -7,9 +7,10 @@ class Layout_2(Layout):
     def __init__(self):
         super(Layout_2, self).__init__()
 
-        self.ch1     =  20 # component height 1
-        self.ch2     =  24 # component height 2
-        self.sh1     =   3 # separator height 1
+        self.ch1     = 20 # component height 1
+        self.ch2     = 24 # component height 2
+        self.sh1     =  3 # separator height 1
+        self.bar     = 12
 
         # Offsets
         self.sep_1_y = self.ch1 # after (date and time)
@@ -20,12 +21,12 @@ class Layout_2(Layout):
         self.row_3_y = self.sep_3_y + self.sh1
         self.sep_4_y = self.row_3_y + self.ch2
         self.row_4_y = self.sep_4_y + self.sh1
-        self.sep_5_y = self.row_4_y + self.ch2 
-        self.row_5_y = self.sep_5_y + self.sh1 + 18
-        self.sep_6_y = self.row_5_y + self.ch2 - 1
-        self.row_6_y = self.sep_6_y + self.sh1 - 1
-        self.sep_7_y = self.row_6_y + self.ch2 - 1
-        self.row_7_y = self.sep_7_y + self.sh1 - 1
+        self.sep_5_y = self.row_4_y + self.ch2 + 1
+        self.row_5_y = self.sep_5_y + self.sh1 + self.bar + 1
+        self.sep_6_y = self.row_5_y + self.ch2
+        self.row_6_y = self.sep_6_y + self.sh1
+        self.sep_7_y = self.row_6_y + self.ch2
+        self.row_7_y = self.sep_7_y + self.sh1
         self.sep_8_y = self.row_7_y + self.ch2 - 1
         self.row_8_y = self.sep_8_y + self.sh1 - 1
 
@@ -111,11 +112,9 @@ class Layout_2(Layout):
         self.pu.set_position(96, self.row_4_y)
         self.pu.set_text("/ h", 0, align=0)
 
-        self.separator5   = BarGraph(128, 18, bg_color=255)
-        self.separator5.set_position(0, self.sep_5_y)
-        self.separator5.update()
-        #self.separator5 = Separator(self.width, 3, bg_color=0)
-        #self.separator5.set_position(0, self.sep_5_y)
+        self.egraph = BarGraph(128, self.bar, bg_color=255)
+        self.egraph.set_position(0, self.sep_5_y)
+        self.egraph.update()
         # --------------------------------------------------
 
         # Euro water
@@ -174,7 +173,7 @@ class Layout_2(Layout):
         # Add components to the layout
         self.add([self.cdate, self.ctime])
         self.add([self.wi, self.wv, self.wu, self.separator2, self.gi, self.gv, self.gu, self.separator3])
-        self.add([self.ei, self.ev, self.eu, self.separator4, self.pi, self.pv, self.pu, self.separator5])
+        self.add([self.ei, self.ev, self.eu, self.separator4, self.pi, self.pv, self.pu, self.egraph])
         self.add([self.ewi, self.ewv, self.ewu, self.egi, self.egv, self.egu, self.eei, self.eev, self.eeu])
         self.add([self.separator8, self.eti, self.etv, self.etu])
 
@@ -245,7 +244,7 @@ class Layout_2(Layout):
         self.set_eur_gas(0)
         self.set_eur_electricity(0)
         self.set_eur_total(0)
-        self.separator5.clear_bars()
+        self.egraph.clear_bars()
 
 
     def set_date_time(self):
@@ -284,15 +283,15 @@ if __name__ == '__main__':
     L2.eur_total       = L2.eur_water + L2.eur_gas + L2.eur_electricity
 
     for i in range(18):
-        L2.separator5.set_bar(i,i+1)
+        L2.egraph.set_bar(i,i+1)
     
-    L2.separator5.set_bar(23,19.0)
+    L2.egraph.set_bar(23,12.0)
         
     for i in range(5):
         L2.inc_water(1)
         L2.inc_gas(0.01)
         L2.set_date_time()
-        L2.separator5.set_bar(18+i, 18 - 2*(i+1))
+        L2.egraph.set_bar(18+i, 12 - (4 + i))
         epd.update()
 
     L2.clear_all()
@@ -303,7 +302,7 @@ if __name__ == '__main__':
         L2.inc_water(1)
         L2.inc_gas(0.01)
         L2.set_date_time()
-        L2.separator5.set_bar(i, 2*(i+1))
+        L2.egraph.set_bar(i, 2*(i+1))
         epd.update()
 
     raw_input()
