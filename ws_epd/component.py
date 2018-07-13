@@ -192,4 +192,8 @@ class BarGraph(Component):
         for i, h in enumerate(self.bars):
             offset = 2 + (5 * i)
             self.draw.rectangle((offset, self.h-h-1, offset+2, self.h-1), fill=self.fg)
+# TODO: line graph
+#        for i in range(1,len(self.bars)):
+#            offset = 2 + (5 * i)
+#            self.draw.line((offset, self.h-self.bars[i-1]-1, offset+5, self.h-self.bars[i]-1), fill=self.fg)
         self.invalid = 2
