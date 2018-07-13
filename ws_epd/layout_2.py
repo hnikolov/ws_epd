@@ -46,11 +46,11 @@ class Layout_2(Layout):
         self.eur_total       = self.eur_water + self.eur_gas + self.eur_electricity
 
         # Build the layout
-        self.cdate   = Component(72, self.ch1, font_size=16, bg_color=0)
+        self.cdate   = Component(72, self.ch1, font_size=18, bg_color=0)
         self.cdate.set_position(0, 0)
         self.cdate.set_text(self.sdate, align=1)
 
-        self.ctime   = Component(64, self.ch1, font_size=16, bg_color=255)
+        self.ctime   = Component(64, self.ch1, font_size=17, bg_color=255)
         self.ctime.set_position(72, 0)
         self.ctime.set_text(self.stime, x=5)
 #        self.ctime.draw_borders()
