@@ -7,25 +7,25 @@ class Layout_2(Layout):
     def __init__(self):
         super(Layout_2, self).__init__()
 
-        self.ch1     = 20 # component height 1
+        self.ch1     = 18 # component height 1
         self.ch2     = 24 # component height 2
         self.sh1     =  3 # separator height 1
-        self.bar     = 12
+        self.bar     = 16
 
         # Offsets
         self.sep_1_y = self.ch1 # after (date and time)
-        self.row_1_y = self.sep_1_y + self.sh1 + 1
+        self.row_1_y = self.sep_1_y + self.sh1 + 2
         self.sep_2_y = self.row_1_y + self.ch2
         self.row_2_y = self.sep_2_y + self.sh1
         self.sep_3_y = self.row_2_y + self.ch2
         self.row_3_y = self.sep_3_y + self.sh1
         self.sep_4_y = self.row_3_y + self.ch2
         self.row_4_y = self.sep_4_y + self.sh1
-        self.sep_5_y = self.row_4_y + self.ch2 + 1
+        self.sep_5_y = self.row_4_y + self.ch2
         self.row_5_y = self.sep_5_y + self.sh1 + self.bar + 1
         self.sep_6_y = self.row_5_y + self.ch2
-        self.row_6_y = self.sep_6_y + self.sh1
-        self.sep_7_y = self.row_6_y + self.ch2
+        self.row_6_y = self.sep_6_y + self.sh1 - 1
+        self.sep_7_y = self.row_6_y + self.ch2 - 1
         self.row_7_y = self.sep_7_y + self.sh1
         self.sep_8_y = self.row_7_y + self.ch2 - 1
         self.row_8_y = self.sep_8_y + self.sh1 - 1
@@ -46,13 +46,13 @@ class Layout_2(Layout):
         self.eur_total       = self.eur_water + self.eur_gas + self.eur_electricity
 
         # Build the layout
-        self.cdate   = Component(72, self.ch1, font_size=18, bg_color=0)
+        self.cdate   = Component(72, self.ch1, font_size=16, bg_color=0)
         self.cdate.set_position(0, 0)
         self.cdate.set_text(self.sdate, align=1)
 
-        self.ctime   = Component(64, self.ch1, font_size=18, bg_color=255)
+        self.ctime   = Component(64, self.ch1, font_size=16, bg_color=255)
         self.ctime.set_position(72, 0)
-        self.ctime.set_text(self.stime, x=3)
+        self.ctime.set_text(self.stime, x=5)
 #        self.ctime.draw_borders()
         # ----------------
         self.separator1 = Separator(self.width, self.sh1, bg_color=255)
@@ -258,7 +258,7 @@ class Layout_2(Layout):
 
         if self.stime != ttime:
             self.stime = ttime
-            self.ctime.set_text(self.stime, x=3)
+            self.ctime.set_text(self.stime, x=5)
 
 
 if __name__ == '__main__':
@@ -294,6 +294,8 @@ if __name__ == '__main__':
         L2.egraph.set_bar(18+i, 12 - (4 + i))
         epd.update()
 
+    raw_input()
+    
     L2.clear_all()
     epd.show()
 

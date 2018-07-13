@@ -164,8 +164,11 @@ class BarGraph(Component):
         self.draw_lines()
     
     def draw_lines(self):
-        self.draw.line((0, self.h/2, self.w, self.h/2), fill=self.fg) # Middle
-        self.draw.line((0, self.h-1, self.w, self.h-1), fill=self.fg) # Bottom
+        self.draw.line((0, self.h/2, self.w, self.h/2), fill=self.fg)         # Middle
+        self.draw.line((0, self.h-1, self.w, self.h-1), fill=self.fg)         # Bottom
+        self.draw.line((self.w/4+1, 0, self.w/4+1, self.h), fill=self.fg)     # Vertical
+        self.draw.line((self.w/2, 0, self.w/2, self.h), fill=self.fg)         # Vertical
+        self.draw.line((self.w*3/4-3, 0, self.w*3/4-3, self.h), fill=self.fg) # Vertical
     
     def clear_bars(self):
         self.bars    = [0 for _ in range(self.nbars)]
