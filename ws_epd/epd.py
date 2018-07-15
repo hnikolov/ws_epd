@@ -74,8 +74,7 @@ class EPD:
     def show(self):
         image_frame = self.get_image_frame()
         self.display(image_frame)
-        if self.partial_update == True:
-            self.display(image_frame)
+        self.display(image_frame)
 
 
     def update(self):
