@@ -269,7 +269,7 @@ if __name__ == '__main__':
     L2 = Layout_2()
 
     # E-Paper Display instance
-    epd = EPD(False, L2)
+    epd = EPD(False, L2, partial_update = True)
     
     # Random values for test
     L2.water           = 890

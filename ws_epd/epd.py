@@ -16,7 +16,7 @@ class EPD:
         x point (size and position) must be the multiple of 8 or the last 3 bits will be ignored
         self.image_frame = Image.new('1', (epd2in13.EPD_WIDTH, epd2in13.EPD_HEIGHT), 255)  # 255: clear the frame
     """
-    def __init__(self, Waveshare = True, Layout = None):
+    def __init__(self, Waveshare = True, Layout = None, partial_update = True):
         if Waveshare == True:
             import epd2in13
             self.epd = epd2in13.EPD()
@@ -29,8 +29,15 @@ class EPD:
 
         if Layout != None:
             self.add(Layout.components)
+            
+        self.partial_update = partial_update
 
-        # display and switch to partial update mode
+        if self.partial_update == True:
+            self.epd.init(self.epd.lut_partial_update)
+        else:
+            self.epd.init(self.epd.lut_full_update)
+
+        # display and switch to partial update mode if needed
         self.display_image_full_update()
 
 
@@ -57,15 +64,18 @@ class EPD:
 
 
     def display_image_full_update(self):
-        self.epd.init(self.epd.lut_full_update)
+        if self.partial_update == True:
+            self.epd.init(self.epd.lut_full_update)
         self.show()
-        self.epd.init(self.epd.lut_partial_update)
+        if self.partial_update == True:
+            self.epd.init(self.epd.lut_partial_update)
 
 
     def show(self):
         image_frame = self.get_image_frame()
         self.display(image_frame)
-        self.display(image_frame)
+        if self.partial_update == True:
+            self.display(image_frame)
 
 
     def update(self):
