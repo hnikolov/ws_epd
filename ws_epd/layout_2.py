@@ -283,7 +283,7 @@ if __name__ == '__main__':
     L2.eur_total       = L2.eur_water + L2.eur_gas + L2.eur_electricity
 
     for i in range(18):
-        L2.egraph.set_bar(i,i+1)
+        L2.egraph.set_bar(i, i+1)
     
     L2.egraph.set_bar(23,12.0)
         
