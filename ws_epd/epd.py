@@ -29,7 +29,7 @@ class EPD:
 
         if Layout != None:
             self.add(Layout.components)
-            
+
         self.partial_update = partial_update
 
         if self.partial_update == True:
@@ -73,7 +73,8 @@ class EPD:
 
     def show(self):
         image_frame = self.get_image_frame()
-        self.display(image_frame)
+        if self.partial_update == True:
+            self.display(image_frame)
         self.display(image_frame)
 
 
